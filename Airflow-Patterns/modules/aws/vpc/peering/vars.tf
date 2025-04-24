@@ -1,0 +1,2 @@
+variable "requester" {}
+variable "accepter" {}
