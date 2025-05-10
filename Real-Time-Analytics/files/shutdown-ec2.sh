@@ -5,7 +5,7 @@ ec2_name=${1}
 if [ -z $ec2_name ]; then 
     echo "Set ec2-name"
     aws ec2 describe-instances \
-    --query "Reservations[*].Instances[*].[InstanceId, Tags[?Key=='Name'].Value | [0]]" \
+    --query "Reservations[*].Instances[*].[InstanceId, Tags[?Key=='Name'].Value | [0], PublicIpAddress]" \
     --output table
     exit
 fi

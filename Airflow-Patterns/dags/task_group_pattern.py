@@ -14,3 +14,4 @@ with DAG("task_group", start_date=datetime(2023, 1, 1), schedule_interval="@dail
     end = DummyOperator(task_id="end")
 
     start >> extract >> process >> end
+    
