@@ -19,6 +19,7 @@ default_args = {
     description='Load data incrementally from Postgres to Snowflake',
     schedule_interval=timedelta(days=1),
     catchup=False
+    max_active_runs=1
 )
 def postgres_to_snowflake_etl():
     table_names = ['veiculos', 'estados', 'cidades', 'concessionarias', 'vendedores', 'clientes', 'vendas']
@@ -28,9 +29,9 @@ def postgres_to_snowflake_etl():
         def get_max_primary_key(table_name: str):
             with SnowflakeHook(snowflake_conn_id='snowflake').get_conn() as conn:
                 with conn.cursor() as cursor:
-                    cursor.execute(f"SELECT MAX(ID_{table_name}) FROM {table_name}")
-                    max_id = cursor.fetchone()[0]
-                    return max_id if max_id is not None else 0
+                    cursor.execute(f"SELECT last_loaded_id FROM etl_tracking WHERE table_name = '{table_name}'")
+                    result = cursor.fetchone()
+                    return result[0] if result and result[0] is not None else 0
  
         @task(task_id=f'load_data_{table_name}')
         def load_incremental_data(table_name: str, max_id: int):
