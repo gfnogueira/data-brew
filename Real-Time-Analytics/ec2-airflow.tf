@@ -1,6 +1,6 @@
 locals {
   airflow-machine = {
-    instance_type           = "t3a.medium"
+    instance_type           = "t3.large" # t3a.medium"
     root_volume_size        = "30"
     root_volume_type        = "gp3"
     ami_id                  = "ami-079cb33ef719a7b78"
