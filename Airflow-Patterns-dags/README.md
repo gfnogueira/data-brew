@@ -72,6 +72,21 @@ airflow scheduler
 Access the UI at [http://localhost:8080](http://localhost:8080)
 
 
+#### Optional terminal run
+
+ 
+
+✅ Run in background with &
+
+```bash
+# Start the webserver in the background
+airflow webserver --port 8080 &
+
+# Start the scheduler in the background
+airflow scheduler &
+```
+
+
 
 ### 7. DAGs
 
