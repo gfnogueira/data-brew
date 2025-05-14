@@ -44,3 +44,29 @@ pip install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}
 export AIRFLOW_HOME=~/airflow
 airflow db init
 ```
+
+### 5. Create admin user
+
+```bash
+airflow users create \
+  --username admin \
+  --firstname Admin \
+  --lastname Nogueira \
+  --role Admin \
+  --email admin@example.com \
+  --password admin
+```
+
+### 6. Start Airflow
+
+In two terminals:
+
+```bash
+# Terminal 1
+airflow webserver --port 8080
+
+# Terminal 2
+airflow scheduler
+```
+
+Access the UI at [http://localhost:8080](http://localhost:8080)
