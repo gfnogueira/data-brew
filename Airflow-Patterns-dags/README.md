@@ -71,12 +71,13 @@ airflow scheduler
 
 Access the UI at [http://localhost:8080](http://localhost:8080)
 
+---
 
-#### Optional terminal run
+### Optional to run on terminal;
 
- 
+You have two options to run the webserver and scheduler without blocking your terminal:  
 
-✅ Run in background with &
+✅ Option 1: Run in background with &
 
 ```bash
 # Start the webserver in the background
@@ -86,7 +87,21 @@ airflow webserver --port 8080 &
 airflow scheduler &
 ```
 
+✅ Option 2: Run with nohup to keep it running after logout  
 
+```bash
+# Start the webserver and save logs
+nohup airflow webserver --port 8080 > webserver.log 2>&1 &
+
+# Start the scheduler and save logs
+nohup airflow scheduler > scheduler.log 2>&1 &
+```
+
+This will keep the processes running even if you close the terminal.  
+You can view logs using:  
+`tail -f webserver.log or tail -f scheduler.log`
+
+---
 
 ### 7. DAGs
 
