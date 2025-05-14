@@ -19,3 +19,28 @@ This is a quick Proof of Concept to demonstrate three simple and powerful patter
 ```bash
 git clone https://github.com/gfnogueira/airflow-patterns-poc.git
 cd airflow-patterns-poc
+```
+
+### 2. Create a virtual environment (optional)
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install Airflow
+
+```bash
+AIRFLOW_VERSION=2.8.1
+PYTHON_VERSION="$(python --version | cut -d ' ' -f 2 | cut -d '.' -f 1-2)"
+CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
+
+pip install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
+```
+
+### 4. Initialize Airflow
+
+```bash
+export AIRFLOW_HOME=~/airflow
+airflow db init
+```
