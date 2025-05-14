@@ -70,3 +70,28 @@ airflow scheduler
 ```
 
 Access the UI at [http://localhost:8080](http://localhost:8080)
+
+
+
+### 7. DAGs
+
+All example DAGs are located in the `dags/` folder:
+- `task_group.py`
+- `dynamic_dags.py`
+- `sensor_timeout_fallback.py`
+
+Just place them in `$AIRFLOW_HOME/dags/` or set a custom path via `airflow.cfg`.
+
+---
+
+## 🧪 Demo Overview
+
+Each DAG demonstrates a specific pattern covered in the presentation:
+
+| DAG Name               | Pattern                     |
+|------------------------|-----------------------------|
+| `task_group`           | Task Group usage            |
+| `dag_pipeline1`, `2`   | Dynamic DAG generation      |
+| `sensor_timeout_pattern` | Timeout & fallback with sensor |
+
+---
