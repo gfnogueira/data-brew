@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -- ================================
 -- REDSHIFT SAMPLE QUERIES COLLECTION
 -- ================================
@@ -486,3 +487,13 @@ SELECT 'Customers Without Sales', COUNT(*) FROM ecommerce.customers c LEFT JOIN 
 UNION ALL
 SELECT 'Products Without Sales', COUNT(*) FROM ecommerce.products p LEFT JOIN ecommerce.sales s ON p.product_id = s.product_id WHERE s.product_id IS NULL
 ORDER BY metric;
+=======
+-- Count users
+SELECT COUNT(*) FROM users;
+
+-- Top domains
+SELECT SPLIT_PART(email, '@', 2) AS domain, COUNT(*) AS total
+FROM users
+GROUP BY domain
+ORDER BY total DESC;
+>>>>>>> e143233 (Redshift PoC structure with SQL scripts and documentation)

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -- ================================
 -- REDSHIFT DATA LOADING
 -- ================================
@@ -305,3 +306,19 @@ SELECT
     COUNT(DISTINCT product_id) as unique_products,
     SUM(total_amount) as total_revenue
 FROM ecommerce.sales;
+=======
+-- Create sample table
+CREATE TABLE IF NOT EXISTS users (
+    id INT,
+    name VARCHAR(50),
+    email VARCHAR(100),
+    created_at TIMESTAMP
+);
+
+-- Load data from S3 (adjust bucket name and IAM role)
+COPY users
+FROM 's3://s3-gfnogueira/sample-users.csv'
+IAM_ROLE 'arn:aws:iam::xxxxx:role/RedshiftRole'
+FORMAT AS CSV
+IGNOREHEADER 1;
+>>>>>>> e143233 (Redshift PoC structure with SQL scripts and documentation)
