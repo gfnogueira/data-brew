@@ -1,0 +1,7 @@
+[
+  {"user_id": "u1", "event_type": "login", "event_time": 1693257600},
+  {"user_id": "u2", "event_type": "purchase", "event_time": 1693257700},
+  {"user_id": "u1", "event_type": "logout", "event_time": 1693257800},
+  {"user_id": "u3", "event_type": "login", "event_time": 1693257900},
+  {"user_id": "u2", "event_type": "login", "event_time": 1693258000}
+]
