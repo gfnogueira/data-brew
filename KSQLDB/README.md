@@ -21,6 +21,9 @@ This PoC demonstrates:
 - `01_create_stream.sql` - Create a stream from a Kafka topic
 - `02_create_table.sql` - Create a table for aggregations
 - `03_transformations.sql` - Example transformation and aggregation
+- `04_windowed_aggregation.sql` - Windowed login count per user (10-minute windows)
+- `05_top_n_users.sql` - Live leaderboard: top 3 users by event count
+- `06_suspicious_activity.sql` - Detect suspicious purchase activity in 1-minute windows
 - `sample_data.json` - Example data to produce to Kafka
 
 ## References
