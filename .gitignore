@@ -9,7 +9,7 @@
 # output files scripts
 offline
 test_results_*
-*.zip
+#*.zip
 # Node artifact files
 node_modules/
 dist/
