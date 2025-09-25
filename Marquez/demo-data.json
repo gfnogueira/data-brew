@@ -1,0 +1,166 @@
+[
+  {
+    "eventType": "START",
+    "eventTime": "2024-09-24T12:00:00.000Z",
+    "run": {
+      "runId": "demo-run-001"
+    },
+    "job": {
+      "namespace": "default",
+      "name": "extract-orders"
+    },
+    "inputs": [
+      {
+        "namespace": "default", 
+        "name": "raw_orders"
+      }
+    ],
+    "producer": "airflow",
+    "schemaURL": "https://openlineage.io/spec/1-0-5/OpenLineage.json#/$defs/RunEvent"
+  },
+  {
+    "eventType": "COMPLETE",
+    "eventTime": "2024-09-24T12:05:00.000Z", 
+    "run": {
+      "runId": "demo-run-001",
+      "facets": {
+        "stats": {
+          "_producer": "airflow",
+          "_schemaURL": "https://openlineage.io/spec/facets/1-0-0/StatsDatasetFacet.json",
+          "rowCount": 15420,
+          "size": 2048576
+        }
+      }
+    },
+    "job": {
+      "namespace": "default",
+      "name": "extract-orders"
+    },
+    "inputs": [
+      {
+        "namespace": "default",
+        "name": "raw_orders"
+      }
+    ],
+    "outputs": [
+      {
+        "namespace": "default", 
+        "name": "orders_clean"
+      }
+    ],
+    "producer": "airflow",
+    "schemaURL": "https://openlineage.io/spec/1-0-5/OpenLineage.json#/$defs/RunEvent"
+  },
+  {
+    "eventType": "START", 
+    "eventTime": "2024-09-24T12:10:00.000Z",
+    "run": {
+      "runId": "demo-run-002"
+    },
+    "job": {
+      "namespace": "default",
+      "name": "transform-sales"
+    },
+    "inputs": [
+      {
+        "namespace": "default",
+        "name": "orders_clean"
+      },
+      {
+        "namespace": "default",
+        "name": "products_ref"
+      }
+    ],
+    "producer": "spark",
+    "schemaURL": "https://openlineage.io/spec/1-0-5/OpenLineage.json#/$defs/RunEvent"
+  },
+  {
+    "eventType": "COMPLETE",
+    "eventTime": "2024-09-24T12:25:00.000Z",
+    "run": {
+      "runId": "demo-run-002", 
+      "facets": {
+        "stats": {
+          "_producer": "spark",
+          "_schemaURL": "https://openlineage.io/spec/facets/1-0-0/StatsDatasetFacet.json",
+          "rowCount": 8520,
+          "size": 1024000
+        }
+      }
+    },
+    "job": {
+      "namespace": "default", 
+      "name": "transform-sales"
+    },
+    "inputs": [
+      {
+        "namespace": "default",
+        "name": "orders_clean"
+      },
+      {
+        "namespace": "default",
+        "name": "products_ref"
+      }
+    ],
+    "outputs": [
+      {
+        "namespace": "default",
+        "name": "sales_summary"
+      }
+    ],
+    "producer": "spark",
+    "schemaURL": "https://openlineage.io/spec/1-0-5/OpenLineage.json#/$defs/RunEvent"
+  },
+  {
+    "eventType": "START",
+    "eventTime": "2024-09-24T12:30:00.000Z",
+    "run": {
+      "runId": "demo-run-003"
+    },
+    "job": {
+      "namespace": "default",
+      "name": "load-warehouse"
+    },
+    "inputs": [
+      {
+        "namespace": "default",
+        "name": "sales_summary"
+      }
+    ],
+    "producer": "dbt",
+    "schemaURL": "https://openlineage.io/spec/1-0-5/OpenLineage.json#/$defs/RunEvent"
+  },
+  {
+    "eventType": "COMPLETE",
+    "eventTime": "2024-09-24T12:40:00.000Z",
+    "run": {
+      "runId": "demo-run-003",
+      "facets": {
+        "stats": {
+          "_producer": "dbt",
+          "_schemaURL": "https://openlineage.io/spec/facets/1-0-0/StatsDatasetFacet.json",
+          "rowCount": 2840,
+          "size": 512000
+        }
+      }
+    },
+    "job": {
+      "namespace": "default",
+      "name": "load-warehouse"
+    },
+    "inputs": [
+      {
+        "namespace": "default",
+        "name": "sales_summary"
+      }
+    ],
+    "outputs": [
+      {
+        "namespace": "default",
+        "name": "warehouse_sales"
+      }
+    ],
+    "producer": "dbt",
+    "schemaURL": "https://openlineage.io/spec/1-0-5/OpenLineage.json#/$defs/RunEvent"
+  }
+]
