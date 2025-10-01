@@ -1,0 +1,21 @@
+---
+name: "send_alert"
+runner_type: "python-script"
+description: "Send alert notification"
+enabled: true
+entry_point: "send_alert.py"
+parameters:
+  message:
+    type: "string"
+    description: "Alert message to send"
+    required: true
+  severity:
+    type: "string"
+    description: "Alert severity level"
+    enum: ["low", "medium", "high", "critical"]
+    default: "medium"
+  channel:
+    type: "string"
+    description: "Notification channel"
+    enum: ["email", "slack", "webhook"]
+    default: "email"

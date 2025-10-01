@@ -1,0 +1,6 @@
+ref: monitoring_pack
+name: Monitoring Pack
+description: System monitoring and automation pack for StackStorm
+version: 1.0.0
+author: System Administrator
+email: admin@company.com

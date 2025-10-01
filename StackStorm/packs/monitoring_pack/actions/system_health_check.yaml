@@ -1,0 +1,19 @@
+---
+name: "system_health_check"
+runner_type: "python-script"
+description: "Check system health metrics"
+enabled: true
+entry_point: "system_health_check.py"
+parameters:
+  threshold_cpu:
+    type: "integer"
+    description: "CPU usage threshold percentage"
+    default: 80
+  threshold_memory:
+    type: "integer"
+    description: "Memory usage threshold percentage"
+    default: 85
+  threshold_disk:
+    type: "integer"
+    description: "Disk usage threshold percentage"
+    default: 90

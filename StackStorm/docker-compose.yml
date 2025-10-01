@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  stackstorm:
+    image: stackstorm/stackstorm:latest
+    container_name: stackstorm
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - ST2_USER=st2admin
+      - ST2_PASSWORD=Ch@ngeMe
+    volumes:
+      - ./packs:/opt/stackstorm/packs/monitoring_pack:ro
+    command: >
+      bash -c "
+        /opt/stackstorm/st2/bin/st2ctl start &&
+        st2 pack install file:///opt/stackstorm/packs/monitoring_pack &&
+        st2ctl reload --register-all &&
+        tail -f /var/log/st2/*.log
+      "
+    healthcheck:
+      test: ["CMD", "st2", "action", "list", "--pack=core", "--limit=1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

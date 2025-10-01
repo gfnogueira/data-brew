@@ -1,0 +1,2 @@
+# StackStorm Monitoring Pack Requirements
+psutil>=5.8.0
