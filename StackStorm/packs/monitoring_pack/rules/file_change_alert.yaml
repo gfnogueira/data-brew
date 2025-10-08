@@ -1,0 +1,13 @@
+---
+name: "file_change_alert_rule"
+description: "Trigger alert when monitored file changes"
+enabled: true
+trigger:
+  type: "monitoring_pack.file_changed"
+criteria: {}
+action:
+  ref: "monitoring_pack.send_alert"
+  parameters:
+    message: "File {{trigger.file_path}} was {{trigger.event_type}} at {{trigger.timestamp}}"
+    severity: "medium"
+    channel: "slack"

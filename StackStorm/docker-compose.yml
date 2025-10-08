@@ -9,7 +9,7 @@ services:
       - "443:443"
     environment:
       - ST2_USER=st2admin
-      - ST2_PASSWORD=Ch@ngeMe
+      - ST2_PASSWORD=123456@
     volumes:
       - ./packs:/opt/stackstorm/packs/monitoring_pack:ro
     command: >

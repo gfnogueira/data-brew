@@ -1,0 +1,18 @@
+---
+name: "health_check_alert_rule"
+description: "Trigger alert when system health check fails"
+enabled: true
+trigger:
+  type: "core.st2.generic.actiontrigger"
+  parameters:
+    action_ref: "monitoring_pack.system_health_check"
+criteria:
+  trigger.status:
+    pattern: "failed"
+    type: "equals"
+action:
+  ref: "monitoring_pack.send_alert"
+  parameters:
+    message: "System health check failed: {{trigger.result.alerts}}"
+    severity: "high"
+    channel: "email"

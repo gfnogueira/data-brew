@@ -1,0 +1,16 @@
+---
+class_name: "FileWatchSensor"
+entry_point: "file_watch_sensor.py"
+description: "Sensor that watches for file changes"
+trigger_types:
+  - name: "file_changed"
+    description: "Triggered when a monitored file changes"
+    payload_schema:
+      type: "object"
+      properties:
+        file_path:
+          type: "string"
+        event_type:
+          type: "string"
+        timestamp:
+          type: "string"
