@@ -1,0 +1,47 @@
+---
+version: '1.0'
+description: Incident response workflow
+input:
+  - incident_type
+  - severity
+tasks:
+  health_check:
+    action: monitoring_pack.system_health_check
+    next:
+      - when: <% succeeded() and not result().result.healthy %>
+        do: send_critical_alert
+      - when: <% succeeded() and result().result.healthy %>
+        do: send_info_alert
+  
+  send_critical_alert:
+    action: monitoring_pack.send_alert
+    input:
+      message: "INCIDENT: <% ctx().incident_type %> - System unhealthy: <% task(health_check).result.result.alerts %>"
+      severity: "critical"
+      channel: "email"
+    next:
+      - do: escalate_incident
+  
+  send_info_alert:
+    action: monitoring_pack.send_alert
+    input:
+      message: "INCIDENT: <% ctx().incident_type %> - System check passed"
+      severity: "low"
+      channel: "slack"
+    next:
+      - do: log_incident
+  
+  escalate_incident:
+    action: core.local
+    input:
+      cmd: "echo 'Escalating incident: <% ctx().incident_type %>'"
+    next:
+      - do: log_incident
+  
+  log_incident:
+    action: core.local
+    input:
+      cmd: "echo 'Incident logged: <% ctx().incident_type %> - Severity: <% ctx().severity %>'"
+output:
+  - incident_handled: true
+  - final_status: <% task(health_check).result.result.status %>
