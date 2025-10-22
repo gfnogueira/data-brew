@@ -1,22 +1,80 @@
 version: '3.8'
 
+networks:
+  superset_network:
+    driver: bridge
+
 services:
+  postgres:
+    image: postgres:13
+    container_name: superset_db
+    networks:
+      - superset_network
+    environment:
+      - POSTGRES_DB=superset_db
+      - POSTGRES_USER=superset
+      - POSTGRES_PASSWORD=superset123
+      - POSTGRES_INITDB_ARGS=--encoding=UTF8 --locale=C
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./init/analytics_views.sql:/docker-entrypoint-initdb.d/02-analytics_views.sql
+      - ./init/sample_data.sql:/docker-entrypoint-initdb.d/03-sample_data.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U superset"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: superset_cache
+    networks:
+      - superset_network
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
   superset:
     image: apache/superset:latest
     container_name: superset_app
+    networks:
+      - superset_network
     ports:
       - "8088:8088"
     environment:
-      - SUPERSET_SECRET_KEY=your-secret-key-here
-      - SUPERSET_LOAD_EXAMPLES=yes
+      - SUPERSET_SECRET_KEY=Lk6KjNC6hCCzhfScOa0nidAXw5OGheDqD5OHjq2X880
+      - SUPERSET_LOAD_EXAMPLES=no
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DATABASE_DB=superset_db
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USER=superset
+      - DATABASE_PASSWORD=superset123
+      - SUPERSET_SQLALCHEMY_DATABASE_URI=postgresql://superset:superset123@postgres:5432/superset_db
+      - CACHE_REDIS_URL=redis://redis:6379/0
+      - CACHE_TYPE=RedisCache
     volumes:
       - ./init:/app/docker-init
+      - superset_home:/app/superset_home
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     command: >
       bash -c "
         superset db upgrade &&
-        superset fab create-admin --username admin --firstname Superset --lastname Admin --email admin@superset.com --password admin &&
+        superset fab create-admin --username admin --firstname Superset --lastname Admin --email admin@superset.com --password admin 2>/dev/null || true &&
         superset init &&
         superset run -h 0.0.0.0 -p 8088 --with-threads --reload --debugger
       "
@@ -25,24 +83,10 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-
-  postgres:
-    image: postgres:13
-    container_name: superset_db
-    environment:
-      - POSTGRES_DB=superset_db
-      - POSTGRES_USER=superset
-      - POSTGRES_PASSWORD=superset123
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init/init.sql:/docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U superset"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    restart: unless-stopped
 
 volumes:
   postgres_data:
+    name: superset_postgres_data
+  superset_home:
+    name: superset_home_data
