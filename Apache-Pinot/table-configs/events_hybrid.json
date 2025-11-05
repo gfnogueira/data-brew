@@ -1,0 +1,17 @@
+{
+  "tableName": "events",
+  "tableType": "HYBRID",
+  "segmentsConfig": {
+    "timeColumnName": "event_time",
+    "timeType": "MILLISECONDS",
+    "schemaName": "events"
+  },
+  "tenants": {},
+  "tableIndexConfig": {},
+  "metadata": {
+    "customConfigs": {
+      "realtime.segment.flush.threshold.rows": "10000",
+      "realtime.segment.flush.threshold.time": "3600000"
+    }
+  }
+}

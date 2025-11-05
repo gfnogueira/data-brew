@@ -1,0 +1,38 @@
+executionFrameworkSpec:
+  name: 'standalone'
+  segmentGenerationJobRunnerClassName: 'org.apache.pinot.plugin.ingestion.batch.standalone.SegmentGenerationJobRunner'
+  segmentTarPushJobRunnerClassName: 'org.apache.pinot.plugin.ingestion.batch.standalone.SegmentTarPushJobRunner'
+
+jobType: SegmentCreationAndTarPush
+
+inputDirURI: '/data/batch'
+includeFileNamePattern: 'glob:**/*.json'
+outputDirURI: '/tmp/pinot-batch-ingestion/segments'
+
+overwriteOutput: true
+
+pinotFSSpecs:
+  - scheme: file
+    className: org.apache.pinot.spi.filesystem.LocalPinotFS
+
+recordReaderSpec:
+  dataFormat: 'json'
+  className: 'org.apache.pinot.plugin.inputformat.json.JSONRecordReader'
+
+tableSpec:
+  tableName: 'events'
+  schemaURI: 'http://pinot-controller:9000/schemas/events'
+  tableConfigURI: 'http://pinot-controller:9000/tables/events'
+
+segmentNameGeneratorSpec:
+  type: normalizedDate
+  configs:
+    segment.name.prefix: 'events_batch'
+    exclude.sequence.id: false
+
+pinotClusterSpecs:
+  - controllerURI: 'http://pinot-controller:9000'
+
+pushJobSpec:
+  pushAttempts: 2
+  pushRetryIntervalMillis: 1000

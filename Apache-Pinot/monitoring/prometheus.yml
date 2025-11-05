@@ -1,0 +1,28 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'pinot-controller'
+    static_configs:
+      - targets: ['pinot-controller:9000']
+    metrics_path: '/metrics'
+
+  - job_name: 'pinot-broker'
+    static_configs:
+      - targets: ['pinot-broker:8099']
+    metrics_path: '/metrics'
+
+  - job_name: 'pinot-server'
+    static_configs:
+      - targets: ['pinot-server:8098']
+    metrics_path: '/metrics'
+
+  - job_name: 'pinot-minion'
+    static_configs:
+      - targets: ['pinot-minion:9514']
+    metrics_path: '/metrics'
+
+  - job_name: 'kafka'
+    static_configs:
+      - targets: ['kafka:9092']

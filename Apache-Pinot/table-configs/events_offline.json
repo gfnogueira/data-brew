@@ -1,0 +1,57 @@
+{
+  "tableName": "events",
+  "tableType": "OFFLINE",
+  "segmentsConfig": {
+    "timeColumnName": "event_time",
+    "timeType": "MILLISECONDS",
+    "retentionTimeUnit": "DAYS",
+    "retentionTimeValue": "90",
+    "segmentPushType": "APPEND",
+    "segmentAssignmentStrategy": "BalanceNumSegmentAssignmentStrategy",
+    "schemaName": "events",
+    "replication": "2"
+  },
+  "tenants": {},
+  "tableIndexConfig": {
+    "loadMode": "MMAP",
+    "invertedIndexColumns": [
+      "event_type",
+      "category",
+      "country",
+      "platform",
+      "device_type"
+    ],
+    "rangeIndexColumns": [
+      "event_time",
+      "amount"
+    ],
+    "sortedColumn": [
+      "event_time"
+    ],
+    "noDictionaryColumns": [
+      "event_id",
+      "session_id"
+    ],
+    "starTreeIndexConfigs": [
+      {
+        "dimensionsSplitOrder": [
+          "event_type",
+          "country",
+          "category",
+          "platform"
+        ],
+        "skipStarNodeCreationForDimensions": [],
+        "functionColumnPairs": [
+          "COUNT__*",
+          "SUM__amount",
+          "SUM__quantity",
+          "MAX__amount"
+        ],
+        "maxLeafRecords": 10000
+      }
+    ]
+  },
+  "metadata": {
+    "customConfigs": {}
+  }
+}
