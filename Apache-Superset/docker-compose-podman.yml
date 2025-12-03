@@ -6,8 +6,8 @@ networks:
 
 services:
   postgres:
-    image: postgres:13
-    container_name: superset_db
+    image: docker.io/postgres:13
+    container_name: superset_db_podman
     networks:
       - superset_network
     environment:
@@ -29,10 +29,12 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
+    # Podman specific: ensure proper user mapping
+    user: "999:999"
 
   redis:
-    image: redis:7-alpine
-    container_name: superset_cache
+    image: docker.io/redis:7-alpine
+    container_name: superset_cache_podman
     networks:
       - superset_network
     ports:
@@ -43,10 +45,12 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
+    # Podman specific: disable systemd for Alpine images
+    command: redis-server --daemonize no
 
   superset:
-    image: apache/superset:latest
-    container_name: superset_app
+    image: docker.io/apache/superset:latest
+    container_name: superset_app_podman
     networks:
       - superset_network
     ports:
@@ -64,9 +68,12 @@ services:
       - SUPERSET_SQLALCHEMY_DATABASE_URI=postgresql://superset:superset123@postgres:5432/superset_db
       - CACHE_REDIS_URL=redis://redis:6379/0
       - CACHE_TYPE=RedisCache
+      # Podman specific: disable systemd integration
+      - PYTHONUNBUFFERED=1
+      - FLASK_ENV=production
     volumes:
-      - ./init:/app/docker-init
-      - superset_home:/app/superset_home
+      - ./init:/app/docker-init:Z
+      - superset_home:/app/superset_home:Z
     depends_on:
       postgres:
         condition: service_healthy
@@ -85,9 +92,11 @@ services:
       timeout: 10s
       retries: 5
     restart: unless-stopped
+    # Podman specific: ensure proper user permissions
+    user: "0:0"
 
 volumes:
   postgres_data:
-    name: superset_postgres_data
+    name: superset_postgres_data_podman
   superset_home:
-    name: superset_home_data
+    name: superset_home_data_podman
