@@ -24,7 +24,7 @@ services:
       - ./init/sample_data.sql:/docker-entrypoint-initdb.d/03-sample_data.sql
       - ./init/demo_data.sql:/docker-entrypoint-initdb.d/04-demo_data.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U superset"]
+      test: ["CMD-SHELL", "pg_isready -U superset -d superset_db"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -45,7 +45,9 @@ services:
     restart: unless-stopped
 
   superset:
-    image: apache/superset:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: superset_app
     networks:
       - superset_network
@@ -64,6 +66,7 @@ services:
       - SUPERSET_SQLALCHEMY_DATABASE_URI=postgresql://superset:superset123@postgres:5432/superset_db
       - CACHE_REDIS_URL=redis://redis:6379/0
       - CACHE_TYPE=RedisCache
+      - SUPERSET_CONFIG_PATH=/app/pythonpath/superset_config.py
     volumes:
       - ./init:/app/docker-init
       - superset_home:/app/superset_home
