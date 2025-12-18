@@ -1,0 +1,16 @@
+# Core
+langchain>=0.1.0
+langchain-openai>=0.0.5
+langchain-community>=0.0.20
+openai>=1.10.0
+
+# Vector Store
+chromadb>=0.4.22
+
+# Database
+psycopg2-binary>=2.9.9
+sqlalchemy>=2.0.25
+
+# Utils
+python-dotenv>=1.0.0
+rich>=13.7.0
