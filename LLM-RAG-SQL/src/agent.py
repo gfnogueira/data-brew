@@ -48,6 +48,12 @@ class SQLAgent:
             ("system", """You are a SQL expert. Given a database schema and a question, 
 generate a valid PostgreSQL query. Return ONLY the SQL query, nothing else.
 
+Important rules:
+- Use proper JOINs when needed
+- Always use table aliases for clarity
+- Include LIMIT clause for large result sets
+- Use aggregate functions correctly with GROUP BY
+
 Schema:
 {schema}"""),
             ("user", "{question}")
@@ -57,19 +63,46 @@ Schema:
         response = chain.invoke({"schema": schema_context, "question": question})
         sql = response.content.strip().replace("```sql", "").replace("```", "").strip()
         
-        # Execute SQL
+        # Execute SQL with error handling
         try:
             results = self.db.execute(sql)
+            
+            # Extract column names
+            columns = None
+            if results and hasattr(results, 'keys'):
+                columns = list(results.keys())
+            elif results:
+                # Try to get from cursor description
+                try:
+                    columns = [desc[0] for desc in results.cursor.description]
+                except:
+                    pass
+            
+            # Convert to list of tuples
+            result_list = [tuple(row) for row in results]
+            
             return {
                 "question": question,
                 "sql": sql,
-                "results": results,
+                "results": result_list,
+                "columns": columns,
                 "error": None
             }
         except Exception as e:
+            error_msg = str(e)
+            
+            # Provide helpful error messages
+            if "syntax error" in error_msg.lower():
+                error_msg += "\n💡 The generated SQL has a syntax error. Try rephrasing your question."
+            elif "does not exist" in error_msg.lower():
+                error_msg += "\n💡 The query references a table or column that doesn't exist."
+            elif "permission denied" in error_msg.lower():
+                error_msg += "\n💡 Database permission issue. Check your credentials."
+            
             return {
                 "question": question,
                 "sql": sql,
                 "results": None,
-                "error": str(e)
+                "columns": None,
+                "error": error_msg
             }
