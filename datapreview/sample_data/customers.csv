@@ -1,0 +1,66 @@
+customer_id,name,email,city,total_purchases,last_purchase_date,is_active
+1,John Smith,john.smith@techcorp.com,New York,15,2025-12-15,true
+2,Maria Garcia,maria.garcia@dataflow.io,Los Angeles,8,2025-11-20,true
+3,David Chen,david.chen@cloudbase.net,Chicago,23,2025-12-28,true
+4,Sarah Johnson,,Houston,5,2025-10-05,false
+5,Michael Brown,michael.brown@nexuslab.co,Phoenix,12,2025-12-01,true
+6,Emily Davis,emily.davis@brightwave.org,Philadelphia,0,,false
+7,James Wilson,james.wilson@codestream.dev,San Antonio,31,2025-12-30,true
+8,Lisa Anderson,lisa.anderson@quantumbit.io,San Diego,7,2025-11-15,true
+9,Robert Taylor,robert.taylor@infracore.net,Dallas,19,2025-12-22,true
+10,Jennifer Martinez,,Seattle,2,2025-09-18,false
+11,William Thomas,william.thomas@alphatech.com,Denver,14,2025-12-10,true
+12,Amanda Jackson,amanda.jackson@blueshift.co,Boston,28,2025-12-25,true
+13,Christopher White,christopher.white@vectorspace.io,Austin,9,2025-11-30,true
+14,Jessica Harris,jessica.harris@gridpoint.net,Nashville,6,2025-10-20,true
+15,Daniel Martin,daniel.martin@peakdata.dev,Portland,17,2025-12-18,true
+16,Michelle Lee,michelle.lee@skyforge.com,Miami,22,2025-12-27,true
+17,Andrew Thompson,andrew.thompson@bytecraft.io,Atlanta,11,2025-11-25,true
+18,Stephanie Moore,stephanie.moore@pulsenet.co,San Francisco,35,2025-12-29,true
+19,Joshua Clark,joshua.clark@novahub.org,Minneapolis,4,2025-10-12,false
+20,Nicole Lewis,,Detroit,0,,false
+21,Kevin Walker,kevin.walker@circuitlabs.net,Tampa,18,2025-12-20,true
+22,Rachel Hall,rachel.hall@dataprime.dev,Charlotte,13,2025-12-05,true
+23,Brandon Young,brandon.young@cloudnine.io,Las Vegas,26,2025-12-26,true
+24,Samantha King,samantha.king@techedge.com,Orlando,8,2025-11-18,true
+25,Tyler Wright,tyler.wright@flowstate.co,Columbus,21,2025-12-23,true
+26,Brittany Scott,brittany.scott@corelogic.net,Indianapolis,3,2025-09-30,false
+27,Justin Green,justin.green@bitstream.io,San Jose,29,2025-12-28,true
+28,Megan Adams,megan.adams@fusiontech.dev,Jacksonville,16,2025-12-14,true
+29,Ryan Baker,ryan.baker@zenithdata.com,Fort Worth,7,2025-11-08,true
+30,Ashley Nelson,,Memphis,1,2025-08-22,false
+31,Jacob Hill,jacob.hill@hyperloop.io,Baltimore,24,2025-12-24,true
+32,Lauren Campbell,lauren.campbell@nodebase.co,Milwaukee,10,2025-11-28,true
+33,Nathan Mitchell,nathan.mitchell@signalwave.net,Albuquerque,33,2025-12-30,true
+34,Kayla Roberts,kayla.roberts@pixelcraft.org,Tucson,5,2025-10-15,true
+35,Aaron Turner,aaron.turner@logicgate.dev,Fresno,12,2025-12-02,true
+36,Heather Phillips,heather.phillips@synthcore.io,Sacramento,19,2025-12-19,true
+37,Sean Parker,sean.parker@vortexlabs.com,Kansas City,27,2025-12-26,true
+38,Danielle Evans,danielle.evans@streamline.co,Mesa,6,2025-11-05,true
+39,Patrick Edwards,patrick.edwards@basecamp.net,Atlanta,15,2025-12-12,true
+40,Courtney Collins,,Omaha,0,,false
+41,Derek Stewart,derek.stewart@pulsetech.io,Raleigh,20,2025-12-21,true
+42,Christina Sanchez,christina.sanchez@dataforge.dev,Miami,9,2025-11-22,true
+43,Travis Morris,travis.morris@cloudpeak.com,Cleveland,32,2025-12-29,true
+44,Amber Rogers,amber.rogers@nexwave.co,Virginia Beach,4,2025-10-08,false
+45,Jeremy Reed,jeremy.reed@bitfusion.io,Oakland,17,2025-12-16,true
+46,Lindsey Cook,lindsey.cook@techflow.net,Minneapolis,11,2025-11-29,true
+47,Marcus Morgan,marcus.morgan@codebase.org,Tulsa,25,2025-12-25,true
+48,Tiffany Bell,tiffany.bell@gridtech.dev,Arlington,8,2025-11-12,true
+49,Kyle Murphy,kyle.murphy@quantumlabs.io,New Orleans,14,2025-12-08,true
+50,Vanessa Bailey,,Wichita,2,2025-09-25,false
+51,Eric Rivera,eric.rivera@skynet.com,Bakersfield,30,2025-12-28,true
+52,Chelsea Cooper,chelsea.cooper@flowdata.co,Tampa,7,2025-11-17,true
+53,Dustin Richardson,dustin.richardson@infratech.net,Aurora,22,2025-12-22,true
+54,Melissa Cox,melissa.cox@novastream.io,Anaheim,13,2025-12-06,true
+55,Cody Howard,cody.howard@bytecode.dev,Honolulu,18,2025-12-17,true
+56,Erica Ward,erica.ward@datahub.com,Santa Ana,5,2025-10-28,true
+57,Shane Torres,shane.torres@circuitbase.co,Corpus Christi,28,2025-12-27,true
+58,Natalie Peterson,natalie.peterson@techwave.io,Lexington,10,2025-11-30,true
+59,Brett Gray,brett.gray@cloudcraft.net,Stockton,21,2025-12-23,true
+60,Brooke Ramirez,,St. Paul,0,,false
+61,Craig James,craig.james@pulsecode.org,Cincinnati,16,2025-12-13,true
+62,Alicia Watson,alicia.watson@logicstream.dev,Anchorage,3,2025-09-15,false
+63,Derrick Brooks,derrick.brooks@vortexdata.io,Newark,34,2025-12-30,true
+64,Monica Kelly,monica.kelly@synthwave.com,Plano,9,2025-11-20,true
+65,Corey Sanders,corey.sanders@nodetech.co,Lincoln,19,2025-12-19,true
