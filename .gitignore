@@ -55,3 +55,6 @@ Thumbs.db
 *.mov
 *.wmv
 
+# Other
+Apache-Pinot/
+Apache-Superset/
