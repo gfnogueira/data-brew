@@ -1,0 +1,105 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: Staged customer data with standardized fields
+    config:
+      elementary:
+        timestamp_column: _loaded_at
+    columns:
+      - name: customer_id
+        description: Unique customer identifier
+        tests:
+          - unique
+          - not_null
+      - name: email
+        description: Customer email address (lowercase)
+        tests:
+          - unique
+          - not_null
+      - name: segment
+        description: Customer segment classification
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['BASIC', 'STANDARD', 'PREMIUM', 'ENTERPRISE']
+      - name: state
+        description: US state code
+        tests:
+          - not_null
+
+  - name: stg_products
+    description: Staged product catalog data
+    config:
+      elementary:
+        timestamp_column: _loaded_at
+    columns:
+      - name: product_id
+        description: Unique product identifier
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: Product display name
+        tests:
+          - not_null
+      - name: category
+        description: Product category
+        tests:
+          - not_null
+      - name: unit_price
+        description: Selling price
+        tests:
+          - not_null
+      - name: unit_cost
+        description: Product cost
+        tests:
+          - not_null
+      - name: margin_pct
+        description: Profit margin percentage
+        tests:
+          - not_null
+
+  - name: stg_orders
+    description: Staged order transactions
+    config:
+      elementary:
+        timestamp_column: order_date
+    columns:
+      - name: order_id
+        description: Unique order identifier
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: Reference to customer
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: product_id
+        description: Reference to product
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+      - name: order_date
+        description: Order timestamp
+        tests:
+          - not_null
+      - name: quantity
+        description: Units ordered
+        tests:
+          - not_null
+      - name: status
+        description: Order status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['pending', 'completed', 'cancelled', 'refunded']
+      - name: net_amount
+        description: Total order amount after discount
+        tests:
+          - not_null

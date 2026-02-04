@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# dbt
+dbt_project/target/
+dbt_project/dbt_packages/
+dbt_project/logs/
+dbt_project/edr_reports/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Environment
+.env
