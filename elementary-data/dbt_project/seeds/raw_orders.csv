@@ -1,0 +1,26 @@
+order_id,customer_id,product_id,order_date,quantity,unit_price,discount_pct,status,payment_method
+ORD0001,CUS001,PRD003,2024-01-05 10:30:00,2,199.99,0.10,completed,credit_card
+ORD0002,CUS002,PRD006,2024-01-08 14:15:00,1,399.99,0.00,completed,credit_card
+ORD0003,CUS003,PRD007,2024-01-10 09:45:00,3,89.99,0.05,completed,bank_transfer
+ORD0004,CUS001,PRD010,2024-01-12 16:20:00,1,299.99,0.15,completed,credit_card
+ORD0005,CUS004,PRD012,2024-01-15 11:00:00,2,499.99,0.00,completed,credit_card
+ORD0006,CUS005,PRD004,2024-01-18 13:30:00,5,49.99,0.10,completed,bank_transfer
+ORD0007,CUS006,PRD003,2024-01-20 15:45:00,3,199.99,0.20,completed,credit_card
+ORD0008,CUS002,PRD011,2024-01-22 10:00:00,1,199.99,0.00,completed,credit_card
+ORD0009,CUS007,PRD001,2024-01-25 14:30:00,10,29.99,0.15,completed,bank_transfer
+ORD0010,CUS008,PRD006,2024-01-28 09:15:00,2,399.99,0.05,completed,credit_card
+ORD0011,CUS003,PRD013,2024-02-01 11:45:00,4,59.99,0.00,completed,credit_card
+ORD0012,CUS009,PRD002,2024-02-05 16:00:00,3,79.99,0.10,completed,bank_transfer
+ORD0013,CUS010,PRD008,2024-02-08 10:30:00,2,79.99,0.00,completed,credit_card
+ORD0014,CUS001,PRD012,2024-02-10 14:00:00,1,499.99,0.25,completed,credit_card
+ORD0015,CUS011,PRD003,2024-02-12 09:30:00,5,199.99,0.15,completed,bank_transfer
+ORD0016,CUS004,PRD010,2024-02-15 15:15:00,2,299.99,0.00,completed,credit_card
+ORD0017,CUS012,PRD005,2024-02-18 11:00:00,3,149.99,0.10,completed,credit_card
+ORD0018,CUS006,PRD009,2024-02-20 13:45:00,2,99.99,0.00,completed,bank_transfer
+ORD0019,CUS002,PRD006,2024-02-22 16:30:00,1,399.99,0.05,completed,credit_card
+ORD0020,CUS013,PRD014,2024-02-25 10:15:00,6,69.99,0.10,completed,credit_card
+ORD0021,CUS005,PRD011,2024-02-28 14:45:00,2,199.99,0.00,completed,bank_transfer
+ORD0022,CUS008,PRD003,2024-03-02 09:00:00,4,199.99,0.20,completed,credit_card
+ORD0023,CUS015,PRD012,2024-03-05 11:30:00,1,499.99,0.00,completed,credit_card
+ORD0024,CUS001,PRD015,2024-03-08 15:00:00,8,39.99,0.15,completed,bank_transfer
+ORD0025,CUS007,PRD007,2024-03-10 10:45:00,2,89.99,0.00,pending,credit_card

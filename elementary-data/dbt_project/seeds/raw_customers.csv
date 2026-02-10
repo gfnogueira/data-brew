@@ -1,0 +1,16 @@
+customer_id,first_name,last_name,email,segment,city,state,registration_date,is_active
+CUS001,James,Wilson,james.wilson@techcorp.com,Enterprise,New York,NY,2023-01-15,true
+CUS002,Sarah,Chen,sarah.chen@datainc.com,Premium,San Francisco,CA,2023-02-20,true
+CUS003,Michael,Brown,michael.brown@analytics.io,Standard,Chicago,IL,2023-03-10,true
+CUS004,Emily,Davis,emily.davis@cloudsoft.com,Premium,Austin,TX,2023-04-05,true
+CUS005,Robert,Martinez,robert.martinez@bigdata.net,Standard,Seattle,WA,2023-05-12,true
+CUS006,Jennifer,Taylor,jennifer.taylor@mlops.co,Enterprise,Boston,MA,2023-06-18,true
+CUS007,David,Anderson,david.anderson@dataeng.io,Basic,Denver,CO,2023-07-22,true
+CUS008,Lisa,Thomas,lisa.thomas@aiplatform.com,Premium,Miami,FL,2023-08-30,true
+CUS009,William,Jackson,william.jackson@techstart.io,Standard,Portland,OR,2023-09-14,true
+CUS010,Amanda,White,amanda.white@datasci.com,Basic,Phoenix,AZ,2023-10-25,true
+CUS011,Christopher,Harris,christopher.harris@cloudai.net,Enterprise,Atlanta,GA,2023-11-08,true
+CUS012,Jessica,Martin,jessica.martin@mlengine.io,Premium,Dallas,TX,2023-12-01,true
+CUS013,Daniel,Garcia,daniel.garcia@dataops.com,Standard,San Diego,CA,2024-01-10,true
+CUS014,Michelle,Robinson,michelle.robinson@analytics.co,Basic,Minneapolis,MN,2024-02-15,false
+CUS015,Kevin,Clark,kevin.clark@bigtech.io,Premium,Detroit,MI,2024-03-20,true

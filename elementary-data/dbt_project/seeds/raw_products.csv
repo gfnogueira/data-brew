@@ -1,0 +1,16 @@
+product_id,product_name,category,subcategory,unit_price,unit_cost,is_active
+PRD001,Cloud Storage Basic,Infrastructure,Storage,29.99,12.00,true
+PRD002,Cloud Storage Pro,Infrastructure,Storage,79.99,32.00,true
+PRD003,Cloud Storage Enterprise,Infrastructure,Storage,199.99,80.00,true
+PRD004,Compute Instance Small,Infrastructure,Compute,49.99,20.00,true
+PRD005,Compute Instance Medium,Infrastructure,Compute,149.99,60.00,true
+PRD006,Compute Instance Large,Infrastructure,Compute,399.99,160.00,true
+PRD007,Database PostgreSQL,Database,Relational,89.99,36.00,true
+PRD008,Database MySQL,Database,Relational,79.99,32.00,true
+PRD009,Database MongoDB,Database,NoSQL,99.99,40.00,true
+PRD010,Analytics Platform,Analytics,BI,299.99,120.00,true
+PRD011,ML Training Basic,AI/ML,Training,199.99,80.00,true
+PRD012,ML Training Advanced,AI/ML,Training,499.99,200.00,true
+PRD013,API Gateway,Integration,API,59.99,24.00,true
+PRD014,Message Queue,Integration,Messaging,69.99,28.00,true
+PRD015,CDN Service,Network,Delivery,39.99,16.00,true
