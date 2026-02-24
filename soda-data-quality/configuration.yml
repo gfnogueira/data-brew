@@ -1,0 +1,14 @@
+# Soda Core data source configuration
+# Connection to raw layer database
+
+data_source raw_warehouse:
+  type: postgres
+  host: localhost
+  port: 5432
+  username: soda_user
+  password: soda_password
+  database: soda_quality
+  schema: raw
+
+# Disable usage stats when running offline or in CI
+send_anonymous_usage_stats: false

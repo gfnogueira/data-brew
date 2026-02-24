@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# Soda
+.soda/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Environment
+.env
