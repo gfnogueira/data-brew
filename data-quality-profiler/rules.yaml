@@ -1,0 +1,33 @@
+# Example of custom validation rules
+# (Future feature - not yet implemented)
+
+rules:
+  - column: customer_id
+    validations:
+      - type: not_null
+        threshold: 0.95  # 95% of values must be non-null
+      - type: unique
+        threshold: 0.8   # 80% of values must be unique
+  
+  - column: price
+    validations:
+      - type: range
+        min: 0
+        max: 10000
+      - type: not_null
+        threshold: 1.0
+  
+  - column: customer_email
+    validations:
+      - type: format
+        pattern: email
+      - type: not_null
+        threshold: 0.9
+  
+  - column: order_date
+    validations:
+      - type: format
+        pattern: date
+      - type: range
+        min: "2024-01-01"
+        max: "2024-12-31"

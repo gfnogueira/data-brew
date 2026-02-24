@@ -1,0 +1,51 @@
+order_id,customer_id,product_name,quantity,price,discount,order_date,customer_email,region,status
+1,101,Laptop,2,1200.50,0.1,2024-01-15,customer1@email.com,Norte,completed
+2,102,Mouse,5,25.99,0.0,2024-01-16,customer2@email.com,Sul,completed
+3,103,Keyboard,3,89.90,0.15,2024-01-17,customer3@email.com,Sudeste,completed
+4,101,Monitor,1,450.00,0.05,2024-01-18,customer1@email.com,Norte,completed
+5,104,Headset,2,150.00,0.0,2024-01-19,customer4@email.com,Nordeste,completed
+6,105,Webcam,1,120.00,0.2,2024-01-20,customer5@email.com,Sul,completed
+7,102,SSD,1,300.00,0.1,2024-01-21,customer2@email.com,Sul,completed
+8,106,Memory,4,80.00,0.0,2024-01-22,customer6@email.com,Sudeste,completed
+9,103,Power Supply,2,120.00,0.0,2024-01-23,customer3@email.com,Sudeste,completed
+10,107,Case,1,150.00,0.1,2024-01-24,customer7@email.com,Norte,completed
+11,108,Laptop,1,1200.50,0.0,2024-01-25,customer8@email.com,Sul,completed
+12,109,Mouse,10,25.99,0.15,2024-01-26,customer9@email.com,Nordeste,completed
+13,110,Keyboard,2,89.90,0.0,2024-01-27,customer10@email.com,Sudeste,completed
+14,101,Monitor,1,450.00,0.0,2024-01-28,customer1@email.com,Norte,completed
+15,111,Headset,3,150.00,0.2,2024-01-29,customer11@email.com,Sul,completed
+16,112,Webcam,2,120.00,0.0,2024-01-30,customer12@email.com,Nordeste,completed
+17,113,SSD,1,300.00,0.1,2024-02-01,customer13@email.com,Sudeste,completed
+18,114,Memory,8,80.00,0.0,2024-02-02,customer14@email.com,Norte,completed
+19,115,Power Supply,1,120.00,0.0,2024-02-03,customer15@email.com,Sul,completed
+20,116,Case,2,150.00,0.15,2024-02-04,customer16@email.com,Nordeste,completed
+21,117,Laptop,1,1200.50,0.0,2024-02-05,customer17@email.com,Sudeste,completed
+22,118,Mouse,6,25.99,0.0,2024-02-06,customer18@email.com,Norte,completed
+23,119,Keyboard,4,89.90,0.1,2024-02-07,customer19@email.com,Sul,completed
+24,120,Monitor,1,450.00,0.0,2024-02-08,customer20@email.com,Nordeste,completed
+25,121,Headset,2,150.00,0.0,2024-02-09,customer21@email.com,Sudeste,completed
+26,122,Webcam,1,120.00,0.1,2024-02-10,customer22@email.com,Norte,completed
+27,123,SSD,2,300.00,0.0,2024-02-11,customer23@email.com,Sul,completed
+28,124,Memory,4,80.00,0.2,2024-02-12,customer24@email.com,Nordeste,completed
+29,125,Power Supply,1,120.00,0.0,2024-02-13,customer25@email.com,Sudeste,completed
+30,126,Case,1,150.00,0.0,2024-02-14,customer26@email.com,Norte,completed
+31,,Laptop,1,1200.50,0.0,2024-02-15,customer27@email.com,Sul,completed
+32,128,Mouse,3,25.99,0.0,2024-02-16,,Sul,completed
+33,129,Keyboard,2,89.90,0.0,2024-02-17,customer29@email.com,,completed
+34,130,Monitor,1,450.00,0.0,2024-02-18,customer30@email.com,Sudeste,
+35,131,Headset,1,150.00,0.0,2024-02-19,customer31@email.com,Norte,completed
+36,132,Webcam,2,120.00,0.0,2024-02-20,customer32@email.com,Sul,completed
+37,133,SSD,1,300.00,0.0,2024-02-21,customer33@email.com,Nordeste,completed
+38,134,Memory,6,80.00,0.0,2024-02-22,customer34@email.com,Sudeste,completed
+39,135,Power Supply,2,120.00,0.0,2024-02-23,customer35@email.com,Norte,completed
+40,136,Case,1,150.00,0.0,2024-02-24,customer36@email.com,Sul,completed
+41,137,Laptop,1,1200.50,0.0,2024-02-25,customer37@email.com,Nordeste,completed
+42,138,Mouse,4,25.99,0.0,2024-02-26,customer38@email.com,Sudeste,completed
+43,139,Keyboard,3,89.90,0.0,2024-02-27,customer39@email.com,Norte,completed
+44,140,Monitor,1,450.00,0.0,2024-02-28,customer40@email.com,Sul,completed
+45,141,Headset,2,150.00,0.0,2024-03-01,customer41@email.com,Nordeste,completed
+46,142,Webcam,1,120.00,0.0,2024-03-02,customer42@email.com,Sudeste,completed
+47,143,SSD,1,300.00,0.0,2024-03-03,customer43@email.com,Norte,completed
+48,144,Memory,8,80.00,0.0,2024-03-04,customer44@email.com,Sul,completed
+49,145,Power Supply,1,120.00,0.0,2024-03-05,customer45@email.com,Nordeste,completed
+50,146,Case,2,150.00,0.0,2024-03-06,customer46@email.com,Sudeste,completed
