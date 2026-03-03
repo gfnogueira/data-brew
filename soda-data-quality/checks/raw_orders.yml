@@ -1,0 +1,26 @@
+# SodaCL checks for raw.orders
+# Validates order transaction landing data
+
+checks for orders:
+  - row_count > 0
+  - row_count < 1000000:
+      name: Reasonable volume for raw orders
+  - schema:
+      name: Detect schema drift
+      warn:
+        when required column missing: [order_id, customer_id, product_id, order_date, quantity, unit_price, status, loaded_at]
+  - missing_count(order_id) = 0
+  - missing_count(customer_id) = 0
+  - missing_count(product_id) = 0
+  - missing_count(order_date) = 0
+  - duplicate_count(order_id) = 0
+  - invalid_count(quantity) = 0:
+      valid min: 1
+      valid max: 10000
+  - invalid_count(unit_price) = 0:
+      valid min: 0
+  - invalid_count(discount_pct) = 0:
+      valid min: 0
+      valid max: 1
+  - invalid_count(status) = 0:
+      valid values: [pending, completed, cancelled, refunded]

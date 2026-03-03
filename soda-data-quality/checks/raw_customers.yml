@@ -1,0 +1,20 @@
+# SodaCL checks for raw.customers
+# Validates customer landing data before staging/dbt
+
+checks for customers:
+  - row_count > 0
+  - row_count < 100000:
+      name: Reasonable volume for raw customers
+  - schema:
+      name: Detect schema drift
+      warn:
+        when required column missing: [customer_id, first_name, last_name, email]
+  - missing_count(customer_id) = 0
+  - missing_count(email) = 0
+  - duplicate_count(customer_id) = 0
+  - invalid_count(email) = 0:
+      valid format: email
+  - invalid_count(segment) = 0:
+      valid values: [Premium, Standard, Basic, Enterprise]
+  - missing_percent(first_name) <= 0
+  - missing_percent(last_name) <= 0
