@@ -1,0 +1,119 @@
+version: '3.8'
+
+# Airbyte ELT Platform - Simplified Setup
+# For production, use the official Airbyte docker-compose
+
+services:
+  # Source Database (simulating external system)
+  source-postgres:
+    image: postgres:15-alpine
+    container_name: airbyte-source-postgres
+    environment:
+      POSTGRES_USER: source_user
+      POSTGRES_PASSWORD: source_password
+      POSTGRES_DB: source_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - source_data:/var/lib/postgresql/data
+      - ./sources/postgres_init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U source_user -d source_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Destination Data Warehouse
+  destination-postgres:
+    image: postgres:15-alpine
+    container_name: airbyte-destination-postgres
+    environment:
+      POSTGRES_USER: warehouse_user
+      POSTGRES_PASSWORD: warehouse_password
+      POSTGRES_DB: warehouse
+    ports:
+      - "5434:5432"
+    volumes:
+      - destination_data:/var/lib/postgresql/data
+      - ./destinations/warehouse_init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U warehouse_user -d warehouse"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Airbyte Core Services
+  airbyte-db:
+    image: postgres:15-alpine
+    container_name: airbyte-db
+    environment:
+      POSTGRES_USER: airbyte
+      POSTGRES_PASSWORD: airbyte
+      POSTGRES_DB: airbyte
+    volumes:
+      - airbyte_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airbyte -d airbyte"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  airbyte-minio:
+    image: minio/minio:latest
+    container_name: airbyte-minio
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    command: server /data --console-address ":9001"
+    volumes:
+      - airbyte_minio:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  airbyte-server:
+    image: airbyte/airbyte-api-server:latest
+    container_name: airbyte-server
+    environment:
+      - AIRBYTE_VERSION=latest
+      - DATABASE_URL=jdbc:postgresql://airbyte-db:5432/airbyte
+      - DATABASE_USER=airbyte
+      - DATABASE_PASSWORD=airbyte
+      - WORKSPACE_ROOT=/workspace
+      - CONFIG_ROOT=/config
+      - TRACKING_STRATEGY=logging
+      - AIRBYTE_ROLE=dev
+    ports:
+      - "8001:8001"
+    volumes:
+      - airbyte_workspace:/workspace
+      - airbyte_config:/config
+      - ./sources/sample_data:/local/sample_data:ro
+    depends_on:
+      airbyte-db:
+        condition: service_healthy
+
+  airbyte-webapp:
+    image: airbyte/webapp:latest
+    container_name: airbyte-webapp
+    environment:
+      - AIRBYTE_SERVER_HOST=airbyte-server
+      - AIRBYTE_SERVER_PORT=8001
+    ports:
+      - "8000:80"
+    depends_on:
+      - airbyte-server
+
+volumes:
+  source_data:
+  destination_data:
+  airbyte_db:
+  airbyte_minio:
+  airbyte_workspace:
+  airbyte_config:
+
+networks:
+  default:
+    name: airbyte-network

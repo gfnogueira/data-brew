@@ -1,0 +1,16 @@
+employee_id,first_name,last_name,email,hire_date,department_id,job_title,salary
+EMP001,Alexander,Thompson,alexander.thompson@techcorp.com,2020-01-15,DEPT001,Senior Software Engineer,145000.00
+EMP002,Olivia,Martinez,olivia.martinez@techcorp.com,2019-03-20,DEPT001,Staff Engineer,165000.00
+EMP003,William,Anderson,william.anderson@techcorp.com,2021-06-01,DEPT002,Data Engineer,125000.00
+EMP004,Sophia,Garcia,sophia.garcia@techcorp.com,2020-09-10,DEPT002,Senior Data Scientist,155000.00
+EMP005,Benjamin,Wilson,benjamin.wilson@techcorp.com,2018-11-05,DEPT003,Product Director,175000.00
+EMP006,Isabella,Taylor,isabella.taylor@techcorp.com,2022-02-14,DEPT003,Product Manager,115000.00
+EMP007,Lucas,Thomas,lucas.thomas@techcorp.com,2019-07-22,DEPT004,Marketing Director,140000.00
+EMP008,Mia,Jackson,mia.jackson@techcorp.com,2021-04-18,DEPT004,Growth Manager,105000.00
+EMP009,Henry,White,henry.white@techcorp.com,2017-08-30,DEPT005,CFO,220000.00
+EMP010,Charlotte,Harris,charlotte.harris@techcorp.com,2020-12-01,DEPT005,Senior Accountant,95000.00
+EMP011,Daniel,Martin,daniel.martin@techcorp.com,2019-05-15,DEPT006,VP of HR,160000.00
+EMP012,Amelia,Thompson,amelia.thompson@techcorp.com,2022-08-22,DEPT006,Talent Acquisition Lead,90000.00
+EMP013,Matthew,Robinson,matthew.robinson@techcorp.com,2021-03-08,DEPT001,DevOps Engineer,135000.00
+EMP014,Harper,Clark,harper.clark@techcorp.com,2020-07-12,DEPT002,ML Engineer,140000.00
+EMP015,Sebastian,Lewis,sebastian.lewis@techcorp.com,2019-10-25,DEPT001,Engineering Manager,155000.00
