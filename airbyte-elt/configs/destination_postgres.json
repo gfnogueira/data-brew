@@ -1,0 +1,15 @@
+{
+  "destinationDefinitionId": "25c5221d-dce2-4163-ade9-739ef790f503",
+  "connectionConfiguration": {
+    "host": "destination-postgres",
+    "port": 5432,
+    "database": "warehouse",
+    "username": "warehouse_user",
+    "password": "warehouse_password",
+    "schema": "raw_data",
+    "ssl_mode": {
+      "mode": "disable"
+    }
+  },
+  "name": "Data Warehouse (PostgreSQL)"
+}

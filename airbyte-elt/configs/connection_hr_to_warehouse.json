@@ -1,0 +1,95 @@
+{
+  "name": "HR System to Data Warehouse",
+  "namespaceDefinition": "destination",
+  "namespaceFormat": "raw_data",
+  "prefix": "hr_",
+  "syncCatalog": {
+    "streams": [
+      {
+        "stream": {
+          "name": "employees",
+          "jsonSchema": {},
+          "supportedSyncModes": ["full_refresh", "incremental"],
+          "sourceDefinedPrimaryKey": [["employee_id"]],
+          "sourceDefinedCursor": true,
+          "defaultCursorField": ["updated_at"]
+        },
+        "config": {
+          "syncMode": "incremental",
+          "cursorField": ["updated_at"],
+          "destinationSyncMode": "append_dedup",
+          "primaryKey": [["employee_id"]],
+          "aliasName": "employees",
+          "selected": true
+        }
+      },
+      {
+        "stream": {
+          "name": "departments",
+          "jsonSchema": {},
+          "supportedSyncModes": ["full_refresh", "incremental"],
+          "sourceDefinedPrimaryKey": [["department_id"]]
+        },
+        "config": {
+          "syncMode": "full_refresh",
+          "destinationSyncMode": "overwrite",
+          "primaryKey": [["department_id"]],
+          "aliasName": "departments",
+          "selected": true
+        }
+      },
+      {
+        "stream": {
+          "name": "salary_history",
+          "jsonSchema": {},
+          "supportedSyncModes": ["full_refresh", "incremental"],
+          "sourceDefinedPrimaryKey": [["salary_id"]],
+          "defaultCursorField": ["created_at"]
+        },
+        "config": {
+          "syncMode": "incremental",
+          "cursorField": ["created_at"],
+          "destinationSyncMode": "append",
+          "primaryKey": [["salary_id"]],
+          "aliasName": "salary_history",
+          "selected": true
+        }
+      },
+      {
+        "stream": {
+          "name": "projects",
+          "jsonSchema": {},
+          "supportedSyncModes": ["full_refresh", "incremental"],
+          "sourceDefinedPrimaryKey": [["project_id"]]
+        },
+        "config": {
+          "syncMode": "full_refresh",
+          "destinationSyncMode": "overwrite",
+          "primaryKey": [["project_id"]],
+          "aliasName": "projects",
+          "selected": true
+        }
+      },
+      {
+        "stream": {
+          "name": "project_assignments",
+          "jsonSchema": {},
+          "supportedSyncModes": ["full_refresh", "incremental"],
+          "sourceDefinedPrimaryKey": [["assignment_id"]]
+        },
+        "config": {
+          "syncMode": "full_refresh",
+          "destinationSyncMode": "overwrite",
+          "primaryKey": [["assignment_id"]],
+          "aliasName": "project_assignments",
+          "selected": true
+        }
+      }
+    ]
+  },
+  "schedule": {
+    "units": 24,
+    "timeUnit": "hours"
+  },
+  "status": "active"
+}
