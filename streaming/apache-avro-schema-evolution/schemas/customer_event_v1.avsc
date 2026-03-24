@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "name": "CustomerEvent",
+  "namespace": "com.databrew.events",
+  "fields": [
+    { "name": "event_id", "type": "string" },
+    { "name": "event_time", "type": "string" },
+    { "name": "customer_id", "type": "string" },
+    { "name": "customer_status", "type": "string" },
+    { "name": "credit_score", "type": "int" }
+  ]
+}
