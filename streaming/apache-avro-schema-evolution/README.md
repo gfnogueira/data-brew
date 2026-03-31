@@ -60,9 +60,9 @@ streaming/avro-schema-evolution/
 
 - New schema version (`customer_event_v2.avsc`)
 - Registration workflow for v2
-- Producer update to emit v2 events
-- Validation run to confirm compatibility with existing consumer
-- Final technical documentation update
+- Compatibility verification workflow before registration
+- Subject inspection workflow for governance and release control
+- Evolution validation runbook
 
 ## Runbook
 
@@ -77,8 +77,16 @@ make produce-v1
 Then apply evolution:
 
 ```bash
+make subject-status
+make check-compatibility
 make register-v2
 make produce-v2
+```
+
+Technical validation guide:
+
+```bash
+cat docs/evolution-validation.md
 ```
 
 ## Operational Notes
