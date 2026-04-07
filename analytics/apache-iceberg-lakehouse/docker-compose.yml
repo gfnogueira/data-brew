@@ -1,0 +1,55 @@
+services:
+  minio:
+    image: minio/minio:RELEASE.2024-01-13T07-53-03Z
+    container_name: iceberg-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio-data:/data
+
+  trino:
+    image: trinodb/trino:447
+    container_name: iceberg-trino
+    depends_on:
+      - minio
+      - iceberg-rest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./conf/trino/catalog:/etc/trino/catalog
+
+  spark:
+    image: bitnami/spark:3.5
+    container_name: iceberg-spark
+    depends_on:
+      - minio
+    environment:
+      SPARK_MODE: master
+      SPARK_MASTER_HOST: iceberg-spark
+    ports:
+      - "7077:7077"
+      - "8081:8081"
+      - "10000:10000"
+
+  iceberg-rest:
+    image: tabulario/iceberg-rest:1.5.0
+    container_name: iceberg-rest
+    depends_on:
+      - minio
+    ports:
+      - "8181:8181"
+    environment:
+      CATALOG_WAREHOUSE: s3://warehouse/
+      CATALOG_IO__IMPL: org.apache.iceberg.aws.s3.S3FileIO
+      CATALOG_S3_ENDPOINT: http://minio:9000
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: minio
+      AWS_SECRET_ACCESS_KEY: minio123
+
+volumes:
+  minio-data:
