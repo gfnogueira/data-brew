@@ -63,3 +63,18 @@ make apply-policies
 make apply-workloads
 make validate
 ```
+
+## Validation Checklist
+
+- YuniKorn scheduler pod is `Running` in namespace `yunikorn`
+- Namespaces `data-team-a` and `data-team-b` are mapped to queue labels
+- Jobs are created and scheduled in both team namespaces
+- Scheduler logs show queue-based placement decisions
+
+## Operational Commands
+
+```bash
+make logs
+make cleanup
+make cluster-down
+```
