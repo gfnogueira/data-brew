@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: yunikorn-configs
+  namespace: yunikorn
+data:
+  queues.yaml: |
+    partitions:
+      - name: default
+        placementrules:
+          - name: provided
+            create: false
+          - name: namespace
+            create: false
+        queues:
+          - name: root
+            properties:
+              application.sort.policy: fairness
+            submitacl: "*"
+            queues:
+              - name: data
+                submitacl: "*"
+                properties:
+                  application.sort.policy: fairness
+                queues:
+                  - name: team-a
+                    submitacl: "*"
+                    resources:
+                      guaranteed:
+                        memory: 2G
+                        vcore: 2
+                      max:
+                        memory: 6G
+                        vcore: 6
+                  - name: team-b
+                    submitacl: "*"
+                    resources:
+                      guaranteed:
+                        memory: 2G
+                        vcore: 2
+                      max:
+                        memory: 6G
+                        vcore: 6
