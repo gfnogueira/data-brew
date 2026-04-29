@@ -1,0 +1,23 @@
+# Two queues representing two pipeline tiers in a data platform.
+# Naming follows the medallion data lake pattern (gold/silver).
+# Higher weight = larger deserved share when queues compete for resources.
+apiVersion: scheduling.volcano.sh/v1beta1
+kind: Queue
+metadata:
+  name: gold-tier
+spec:
+  weight: 4
+  reclaimable: true
+---
+apiVersion: scheduling.volcano.sh/v1beta1
+kind: Queue
+metadata:
+  name: silver-tier
+spec:
+  weight: 1
+  reclaimable: true
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lakehouse-batch

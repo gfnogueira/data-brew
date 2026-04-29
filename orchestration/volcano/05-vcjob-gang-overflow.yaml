@@ -1,0 +1,33 @@
+# Heavy Spark-style batch job that does NOT fit the cluster.
+# 6 executors x 5Gi = 30Gi total, vs ~23Gi cluster allocatable.
+# Expected: every pod stays Pending. Volcano refuses to bind any pod
+# because it cannot bind all (gang scheduling guarantee).
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: quarterly-revenue-rebuild
+  namespace: lakehouse-batch
+spec:
+  minAvailable: 6
+  schedulerName: volcano
+  queue: gold-tier
+  tasks:
+    - replicas: 6
+      name: spark-executor
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: spark-executor
+              image: busybox:1.36
+              command:
+                - sh
+                - -c
+                - "sleep infinity"
+              resources:
+                requests:
+                  # Sized so 6 pods (30Gi total) overflow the cluster while
+                  # one pod alone (5Gi) still fits a single worker — that
+                  # makes the default-scheduler comparison show partial work.
+                  cpu: "1"
+                  memory: "5Gi"

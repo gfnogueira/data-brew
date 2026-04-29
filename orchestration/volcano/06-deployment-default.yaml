@@ -1,0 +1,35 @@
+# Same workload as quarterly-revenue-rebuild, but as a regular Deployment
+# scheduled by kube-scheduler (default). Models the "naive" Spark-on-K8s
+# setup without a batch scheduler.
+# Expected: partial scheduling. Some executors Running, the rest Pending.
+# In a real Spark job the running executors would wait forever for peers
+# that never come up — wasted compute.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quarterly-revenue-naive
+  namespace: lakehouse-batch
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: quarterly-revenue-naive
+  template:
+    metadata:
+      labels:
+        app: quarterly-revenue-naive
+    spec:
+      # No schedulerName -> default kube-scheduler picks pods up.
+      containers:
+        - name: spark-executor
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - "sleep infinity"
+          resources:
+            requests:
+              # Same per-pod ask as quarterly-revenue-rebuild. One pod fits
+              # per worker; 6 pods total don't fit.
+              cpu: "1"
+              memory: "5Gi"
