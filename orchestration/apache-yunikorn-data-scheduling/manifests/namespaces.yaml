@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: yunikorn
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: data-team-a
+  labels:
+    yunikorn.apache.org/queue: root.data.team-a
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: data-team-b
+  labels:
+    yunikorn.apache.org/queue: root.data.team-b
