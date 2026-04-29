@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: team-a-batch-critical
+  namespace: data-team-a
+  labels:
+    app: team-a-batch-critical
+spec:
+  template:
+    metadata:
+      labels:
+        app: team-a-batch-critical
+    spec:
+      priorityClassName: data-critical
+      restartPolicy: Never
+      containers:
+        - name: batch-task
+          image: busybox:1.36
+          command: ["sh", "-c", "echo Team A critical task; sleep 45"]
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+  backoffLimit: 0
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: team-a-batch-standard
+  namespace: data-team-a
+  labels:
+    app: team-a-batch-standard
+spec:
+  template:
+    metadata:
+      labels:
+        app: team-a-batch-standard
+    spec:
+      priorityClassName: data-standard
+      restartPolicy: Never
+      containers:
+        - name: batch-task
+          image: busybox:1.36
+          command: ["sh", "-c", "echo Team A standard task; sleep 60"]
+          resources:
+            requests:
+              cpu: "400m"
+              memory: "384Mi"
+            limits:
+              cpu: "400m"
+              memory: "384Mi"
+  backoffLimit: 0
