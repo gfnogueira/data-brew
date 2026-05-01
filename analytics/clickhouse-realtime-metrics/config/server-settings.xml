@@ -1,0 +1,25 @@
+<clickhouse>
+  <logger>
+    <level>information</level>
+    <console>true</console>
+  </logger>
+
+  <merge_tree>
+    <parts_to_throw_insert>3000</parts_to_throw_insert>
+    <parts_to_delay_insert>1500</parts_to_delay_insert>
+    <max_parts_in_total>100000</max_parts_in_total>
+    <merge_with_ttl_timeout>3600</merge_with_ttl_timeout>
+  </merge_tree>
+
+  <query_log>
+    <database>system</database>
+    <table>query_log</table>
+    <flush_interval_milliseconds>5000</flush_interval_milliseconds>
+  </query_log>
+
+  <asynchronous_metric_log>
+    <database>system</database>
+    <table>asynchronous_metric_log</table>
+    <flush_interval_milliseconds>10000</flush_interval_milliseconds>
+  </asynchronous_metric_log>
+</clickhouse>
