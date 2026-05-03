@@ -5,7 +5,7 @@ CLIENT := $(COMPOSE) exec -T clickhouse clickhouse-client \
   --password $${CLICKHOUSE_PASSWORD:-metrics_password} \
   --database $${CLICKHOUSE_DATABASE:-realtime}
 
-.PHONY: up down restart status logs smoke init
+.PHONY: up down restart status logs smoke init seed stream
 
 up:
 	$(COMPOSE) up -d
@@ -31,3 +31,9 @@ init:
 	$(CLIENT) --multiquery < sql/schema/02_metrics_1m.sql
 	$(CLIENT) --multiquery < sql/schema/03_metrics_5m.sql
 	$(CLIENT) --multiquery < sql/schema/04_metrics_daily.sql
+
+seed:
+	cd scripts && python seed_data.py
+
+stream:
+	cd scripts && python stream_events.py
