@@ -5,7 +5,7 @@ CLIENT := $(COMPOSE) exec -T clickhouse clickhouse-client \
   --password $${CLICKHOUSE_PASSWORD:-metrics_password} \
   --database $${CLICKHOUSE_DATABASE:-realtime}
 
-.PHONY: up down restart status logs smoke
+.PHONY: up down restart status logs smoke init
 
 up:
 	$(COMPOSE) up -d
@@ -24,3 +24,10 @@ logs:
 
 smoke:
 	$(CLIENT) --query "SELECT version(), now(), currentUser()"
+
+init:
+	$(CLIENT) --multiquery < sql/schema/00_database.sql
+	$(CLIENT) --multiquery < sql/schema/01_raw_events.sql
+	$(CLIENT) --multiquery < sql/schema/02_metrics_1m.sql
+	$(CLIENT) --multiquery < sql/schema/03_metrics_5m.sql
+	$(CLIENT) --multiquery < sql/schema/04_metrics_daily.sql
