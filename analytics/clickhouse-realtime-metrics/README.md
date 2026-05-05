@@ -63,7 +63,17 @@ make queries    # Run the operational query pack
 make validate   # Aggregation freshness, lag, and cross-tier consistency
 make health     # Server, table, MV, and async insert health
 make bench      # Latency benchmark of the query pack
+make alerts     # Threshold-driven alert evaluation (non-zero exit on trigger)
 ```
+
+## Alert Pack
+
+| File | Trigger |
+| --- | --- |
+| `01_latency_spike.sql` | Region p95 above `ALERT_LATENCY_P95_MS` over the last 5 minutes |
+| `02_traffic_drop.sql`  | Recent volume below `ALERT_TRAFFIC_MIN_RATIO` of the prior baseline |
+| `03_revenue_drop.sql`  | Purchase revenue below `ALERT_REVENUE_MIN_RATIO` of the prior baseline |
+| `04_error_burst.sql`   | Region error rate above `ALERT_ERROR_MAX_RATE` over the last 5 minutes |
 
 ## Query Pack
 

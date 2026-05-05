@@ -5,7 +5,7 @@ CLIENT := $(COMPOSE) exec -T clickhouse clickhouse-client \
   --password $${CLICKHOUSE_PASSWORD:-metrics_password} \
   --database $${CLICKHOUSE_DATABASE:-realtime}
 
-.PHONY: up down restart status logs smoke init seed stream queries validate health bench
+.PHONY: up down restart status logs smoke init seed stream queries validate health bench alerts
 
 up:
 	$(COMPOSE) up -d
@@ -53,3 +53,6 @@ health:
 
 bench:
 	bash scripts/benchmark.sh
+
+alerts:
+	bash scripts/alert_check.sh
