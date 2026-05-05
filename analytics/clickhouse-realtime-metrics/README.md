@@ -52,3 +52,24 @@ pip install -r requirements.txt
 make up
 make smoke
 ```
+
+## Runtime Sequence
+
+```bash
+make init       # Apply schema and materialized views
+make seed       # Backfill historical events for the configured window
+make stream     # Continuous event stream (separate terminal)
+make queries    # Run the operational query pack
+```
+
+## Query Pack
+
+| File | Purpose |
+| --- | --- |
+| `01_throughput_per_minute.sql` | Per-minute event throughput and unique sessions |
+| `02_active_users_by_platform.sql` | Active users per platform on a 5-minute window |
+| `03_regional_latency.sql` | p50/p95/p99 latency by region |
+| `04_revenue_by_region.sql` | Hourly revenue by region for purchase events |
+| `05_session_funnel.sql` | Session-level funnel and conversion rate |
+| `06_error_rate_per_region.sql` | Error rate per region using server-side counters |
+| `07_top_users_revenue.sql` | Highest revenue users in the last hour |

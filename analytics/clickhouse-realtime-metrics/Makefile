@@ -5,7 +5,7 @@ CLIENT := $(COMPOSE) exec -T clickhouse clickhouse-client \
   --password $${CLICKHOUSE_PASSWORD:-metrics_password} \
   --database $${CLICKHOUSE_DATABASE:-realtime}
 
-.PHONY: up down restart status logs smoke init seed stream
+.PHONY: up down restart status logs smoke init seed stream queries
 
 up:
 	$(COMPOSE) up -d
@@ -37,3 +37,10 @@ seed:
 
 stream:
 	cd scripts && python stream_events.py
+
+queries:
+	@for f in sql/queries/*.sql; do \
+		echo "==> $$f"; \
+		$(CLIENT) --multiquery < $$f --format PrettyCompact; \
+		echo; \
+	done
