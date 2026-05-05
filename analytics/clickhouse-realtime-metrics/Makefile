@@ -5,7 +5,7 @@ CLIENT := $(COMPOSE) exec -T clickhouse clickhouse-client \
   --password $${CLICKHOUSE_PASSWORD:-metrics_password} \
   --database $${CLICKHOUSE_DATABASE:-realtime}
 
-.PHONY: up down restart status logs smoke init seed stream queries
+.PHONY: up down restart status logs smoke init seed stream queries validate health bench
 
 up:
 	$(COMPOSE) up -d
@@ -44,3 +44,12 @@ queries:
 		$(CLIENT) --multiquery < $$f --format PrettyCompact; \
 		echo; \
 	done
+
+validate:
+	bash scripts/validate_metrics.sh
+
+health:
+	bash scripts/health_check.sh
+
+bench:
+	bash scripts/benchmark.sh

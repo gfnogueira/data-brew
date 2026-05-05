@@ -60,6 +60,9 @@ make init       # Apply schema and materialized views
 make seed       # Backfill historical events for the configured window
 make stream     # Continuous event stream (separate terminal)
 make queries    # Run the operational query pack
+make validate   # Aggregation freshness, lag, and cross-tier consistency
+make health     # Server, table, MV, and async insert health
+make bench      # Latency benchmark of the query pack
 ```
 
 ## Query Pack
