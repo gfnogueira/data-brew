@@ -37,9 +37,13 @@ analytics/clickhouse-realtime-metrics/
 │   └── users.xml
 ├── sql/
 │   ├── schema/
-│   └── queries/
-└── scripts/
-    └── lib/
+│   ├── queries/
+│   └── alerts/
+├── scripts/
+│   └── lib/
+└── grafana/
+    ├── provisioning/
+    └── dashboards/
 ```
 
 ## Bootstrap
@@ -65,6 +69,12 @@ make health     # Server, table, MV, and async insert health
 make bench      # Latency benchmark of the query pack
 make alerts     # Threshold-driven alert evaluation (non-zero exit on trigger)
 ```
+
+## Grafana
+
+`make up` provisions Grafana on `http://localhost:3000` with the ClickHouse
+datasource and the **Realtime Metrics Overview** dashboard pre-loaded. Default
+credentials come from `GRAFANA_ADMIN_USER` / `GRAFANA_ADMIN_PASSWORD`.
 
 ## Alert Pack
 

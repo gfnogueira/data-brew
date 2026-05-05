@@ -1,0 +1,160 @@
+{
+  "uid": "realtime-overview",
+  "title": "Realtime Metrics Overview",
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": true,
+  "timezone": "browser",
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "refresh": "10s",
+  "tags": ["clickhouse", "realtime"],
+  "templating": {
+    "list": [
+      {
+        "name": "region",
+        "type": "query",
+        "datasource": {
+          "type": "grafana-clickhouse-datasource",
+          "uid": "clickhouse-realtime"
+        },
+        "refresh": 2,
+        "includeAll": true,
+        "multi": true,
+        "query": {
+          "rawSql": "SELECT DISTINCT region FROM realtime.metrics_1m WHERE window_start >= now() - INTERVAL 1 HOUR ORDER BY region"
+        }
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "timeseries",
+      "title": "Events per minute",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-realtime"
+      },
+      "targets": [
+        {
+          "rawSql": "SELECT window_start AS t, countMerge(events_count) AS events FROM realtime.metrics_1m WHERE $__timeFilter(window_start) AND region IN (${region:sqlstring}) GROUP BY t ORDER BY t",
+          "format": 0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "Active users per minute",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-realtime"
+      },
+      "targets": [
+        {
+          "rawSql": "SELECT window_start AS t, uniqMerge(unique_users) AS active_users FROM realtime.metrics_1m WHERE $__timeFilter(window_start) AND region IN (${region:sqlstring}) GROUP BY t ORDER BY t",
+          "format": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "timeseries",
+      "title": "Latency p95 by region",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-realtime"
+      },
+      "targets": [
+        {
+          "rawSql": "SELECT window_start AS t, region, arrayElement(quantilesTDigestMerge(0.95)(latency_quantiles), 1) AS p95 FROM realtime.metrics_1m WHERE $__timeFilter(window_start) AND region IN (${region:sqlstring}) GROUP BY t, region ORDER BY t",
+          "format": 0
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "timeseries",
+      "title": "Revenue per 5 minutes",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-realtime"
+      },
+      "targets": [
+        {
+          "rawSql": "SELECT window_start AS t, sumMerge(revenue_total) AS revenue FROM realtime.metrics_5m WHERE $__timeFilter(window_start) AND event_type = 'purchase' AND region IN (${region:sqlstring}) GROUP BY t ORDER BY t",
+          "format": 0
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Error rate (last 5m)",
+      "gridPos": {"h": 6, "w": 8, "x": 0, "y": 16},
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-realtime"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"color": "green", "value": null},
+              {"color": "yellow", "value": 0.02},
+              {"color": "red", "value": 0.05}
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "rawSql": "SELECT countIfMerge(error_count) / nullIf(countMerge(events_count), 0) AS error_rate FROM realtime.metrics_1m WHERE window_start >= now() - INTERVAL 5 MINUTE AND region IN (${region:sqlstring})",
+          "format": 1
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Events (last 5m)",
+      "gridPos": {"h": 6, "w": 8, "x": 8, "y": 16},
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-realtime"
+      },
+      "targets": [
+        {
+          "rawSql": "SELECT countMerge(events_count) AS events FROM realtime.metrics_1m WHERE window_start >= now() - INTERVAL 5 MINUTE AND region IN (${region:sqlstring})",
+          "format": 1
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "Active users (last 5m)",
+      "gridPos": {"h": 6, "w": 8, "x": 16, "y": 16},
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-realtime"
+      },
+      "targets": [
+        {
+          "rawSql": "SELECT uniqMerge(unique_users) AS active_users FROM realtime.metrics_1m WHERE window_start >= now() - INTERVAL 5 MINUTE AND region IN (${region:sqlstring})",
+          "format": 1
+        }
+      ]
+    }
+  ]
+}
