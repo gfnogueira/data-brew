@@ -29,6 +29,9 @@ init:
 	$(PSQL) -f /dev/stdin < sql/schema/00_extension.sql
 	$(PSQL) -f /dev/stdin < sql/schema/01_telemetry_raw.sql
 	$(PSQL) -f /dev/stdin < sql/schema/02_indexes.sql
+	$(PSQL) -f /dev/stdin < sql/schema/03_telemetry_1m.sql
+	$(PSQL) -f /dev/stdin < sql/schema/04_telemetry_1h.sql
+	$(PSQL) -f /dev/stdin < sql/schema/05_refresh_policies.sql
 
 seed:
 	cd scripts && python seed_data.py
