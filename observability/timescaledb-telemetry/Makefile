@@ -5,7 +5,7 @@ PSQL := $(COMPOSE) exec -T timescaledb psql \
   -d $${POSTGRES_DB:-telemetry} \
   -v ON_ERROR_STOP=1
 
-.PHONY: up down restart status logs smoke
+.PHONY: up down restart status logs smoke init
 
 up:
 	$(COMPOSE) up -d
@@ -24,3 +24,8 @@ logs:
 
 smoke:
 	$(PSQL) -c "SELECT version(), now(), current_user"
+
+init:
+	$(PSQL) -f /dev/stdin < sql/schema/00_extension.sql
+	$(PSQL) -f /dev/stdin < sql/schema/01_telemetry_raw.sql
+	$(PSQL) -f /dev/stdin < sql/schema/02_indexes.sql
