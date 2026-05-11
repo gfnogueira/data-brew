@@ -52,3 +52,25 @@ pip install -r requirements.txt
 make up
 make smoke
 ```
+
+## Runtime Sequence
+
+```bash
+make init       # Extensions, hypertable, indexes, continuous aggregates, refresh policies
+make policies   # Compression and retention policies for the tiered lifecycle
+make seed       # Backfill historical events for the configured window
+make stream     # Continuous event stream (separate terminal)
+make queries    # Run the operational query pack
+```
+
+## Query Pack
+
+| File | Purpose |
+| --- | --- |
+| `01_throughput_per_minute.sql` | Per-minute throughput and bad sample counts from the 1m cagg |
+| `02_active_devices.sql` | Active devices per 5-minute bucket and region |
+| `03_sensor_quantiles.sql` | p50/p95/p99 per region, plant, and sensor via percentile sketches |
+| `04_gapfill_temperature.sql` | LOCF and linear interpolation for temperature gaps |
+| `05_candlestick_voltage.sql` | OHLC candlesticks for voltage over five-minute windows |
+| `06_downsample_lttb.sql` | LTTB downsampling for high-resolution device traces |
+| `07_chunk_size_breakdown.sql` | Chunk-level size and compression breakdown |

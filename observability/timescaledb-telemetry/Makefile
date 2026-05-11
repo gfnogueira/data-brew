@@ -5,7 +5,7 @@ PSQL := $(COMPOSE) exec -T timescaledb psql \
   -d $${POSTGRES_DB:-telemetry} \
   -v ON_ERROR_STOP=1
 
-.PHONY: up down restart status logs smoke init seed stream
+.PHONY: up down restart status logs smoke init seed stream policies queries
 
 up:
 	$(COMPOSE) up -d
@@ -38,3 +38,14 @@ seed:
 
 stream:
 	cd scripts && python stream_events.py
+
+policies:
+	$(PSQL) -f /dev/stdin < sql/schema/06_compression.sql
+	$(PSQL) -f /dev/stdin < sql/schema/07_retention.sql
+
+queries:
+	@for f in sql/queries/*.sql; do \
+		echo "==> $$f"; \
+		$(PSQL) -f /dev/stdin < $$f; \
+		echo; \
+	done
