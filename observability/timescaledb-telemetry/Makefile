@@ -5,7 +5,7 @@ PSQL := $(COMPOSE) exec -T timescaledb psql \
   -d $${POSTGRES_DB:-telemetry} \
   -v ON_ERROR_STOP=1
 
-.PHONY: up down restart status logs smoke init seed stream policies queries
+.PHONY: up down restart status logs smoke init seed stream policies queries validate health bench
 
 up:
 	$(COMPOSE) up -d
@@ -49,3 +49,12 @@ queries:
 		$(PSQL) -f /dev/stdin < $$f; \
 		echo; \
 	done
+
+validate:
+	bash scripts/validate_metrics.sh
+
+health:
+	bash scripts/health_check.sh
+
+bench:
+	bash scripts/benchmark.sh
