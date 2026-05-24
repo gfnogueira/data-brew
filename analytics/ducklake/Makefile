@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 COMPOSE := docker compose
 
-.PHONY: up down restart status logs smoke psql mc init
+.PHONY: up down restart status logs smoke psql mc init seed mutate snapshots
 
 up:
 	$(COMPOSE) up -d
@@ -32,3 +32,12 @@ mc:
 
 init:
 	cd scripts && python init_lake.py
+
+seed:
+	cd scripts && python run_operations.py 01_seed_initial.sql
+
+mutate:
+	cd scripts && python run_operations.py 02_mutations.sql
+
+snapshots:
+	cd scripts && python run_operations.py 03_time_travel.sql 04_changes_inspection.sql
