@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 COMPOSE := docker compose
 
-.PHONY: up down restart status logs smoke psql mc
+.PHONY: up down restart status logs smoke psql mc init
 
 up:
 	$(COMPOSE) up -d
@@ -29,3 +29,6 @@ mc:
 	@docker run --rm --network host -it \
 	  minio/mc:RELEASE.2025-02-08T19-14-21Z \
 	  --alias-set local http://localhost:9000 $${STORAGE_ACCESS_KEY:-minioadmin} $${STORAGE_SECRET_KEY:-minioadmin}
+
+init:
+	cd scripts && python init_lake.py
