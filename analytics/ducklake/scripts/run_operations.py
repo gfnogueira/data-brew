@@ -20,11 +20,18 @@ def run_file(conn, path: Path) -> None:
     print()
 
 
+def resolve(name: str) -> Path:
+    candidate = Path(name)
+    if candidate.is_absolute() or name.startswith(("./", "../", "/")):
+        return candidate.resolve()
+    return OPS_DIR / name
+
+
 def main() -> int:
     files = sys.argv[1:] or sorted(p.name for p in OPS_DIR.glob("*.sql"))
     conn = open_session()
     for name in files:
-        run_file(conn, OPS_DIR / name)
+        run_file(conn, resolve(name))
     return 0
 
 
