@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 COMPOSE := docker compose
 
-.PHONY: up down restart status logs smoke psql mc init seed mutate snapshots
+.PHONY: up down restart status logs smoke psql mc init seed mutate snapshots evolution concurrent
 
 up:
 	$(COMPOSE) up -d
@@ -41,3 +41,9 @@ mutate:
 
 snapshots:
 	cd scripts && python run_operations.py 03_time_travel.sql 04_changes_inspection.sql
+
+evolution:
+	cd scripts && python run_operations.py 05_schema_evolution.sql
+
+concurrent:
+	cd scripts && python concurrent_writers.py
