@@ -1,0 +1,63 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: Standardized customer attributes with normalized casing and country codes.
+    columns:
+      - name: customer_id
+        tests: [unique, not_null]
+      - name: email
+        tests: [unique, not_null]
+      - name: tier
+        tests:
+          - accepted_values:
+              values: ['free', 'starter', 'pro', 'enterprise']
+
+  - name: stg_products
+    description: Standardized product catalog with normalized categories and decimal price representation.
+    columns:
+      - name: product_id
+        tests: [unique, not_null]
+      - name: sku
+        tests: [unique, not_null]
+      - name: list_price_cents
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+  - name: stg_orders
+    description: Standardized orders with derived order date and normalized status and channel values.
+    columns:
+      - name: order_id
+        tests: [unique, not_null]
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+
+  - name: stg_order_items
+    description: Standardized line items including line amount in cents derived from unit price and quantity.
+    columns:
+      - name: order_item_id
+        tests: [unique, not_null]
+      - name: order_id
+        tests:
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+      - name: quantity
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+      - name: line_amount_cents
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"

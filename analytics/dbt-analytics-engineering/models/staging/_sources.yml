@@ -1,0 +1,92 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Seeded raw layer representing the source-of-record extracts from the e-commerce platform.
+    schema: raw
+    tables:
+      - name: customers
+        description: One row per registered customer.
+        columns:
+          - name: customer_id
+            description: Surrogate key issued by the source system.
+            tests:
+              - unique
+              - not_null
+          - name: email
+            description: Customer email, expected to be unique and non-null.
+            tests:
+              - unique
+              - not_null
+          - name: country
+            description: Two-letter ISO 3166-1 alpha-2 country code.
+          - name: signup_date
+            description: Date on which the customer registered.
+          - name: tier
+            description: Subscription tier at signup time.
+
+      - name: products
+        description: Catalog of products available on the platform.
+        columns:
+          - name: product_id
+            tests:
+              - unique
+              - not_null
+          - name: sku
+            tests:
+              - unique
+              - not_null
+          - name: list_price_cents
+            description: Listed price stored as integer cents to avoid float rounding.
+            tests:
+              - not_null
+          - name: is_active
+            description: Whether the product is currently sellable.
+
+      - name: orders
+        description: One row per order placed by a customer.
+        columns:
+          - name: order_id
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw', 'customers')
+                  field: customer_id
+          - name: status
+            tests:
+              - accepted_values:
+                  values: ['paid', 'refunded', 'pending', 'cancelled']
+          - name: channel
+            tests:
+              - accepted_values:
+                  values: ['web', 'ios', 'android']
+
+      - name: order_items
+        description: Line items belonging to each order.
+        columns:
+          - name: order_item_id
+            tests:
+              - unique
+              - not_null
+          - name: order_id
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw', 'orders')
+                  field: order_id
+          - name: product_id
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw', 'products')
+                  field: product_id
+          - name: quantity
+            tests:
+              - not_null
+          - name: unit_price_cents
+            tests:
+              - not_null
