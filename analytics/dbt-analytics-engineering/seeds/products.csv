@@ -1,0 +1,21 @@
+product_id,sku,name,category,subcategory,list_price_cents,is_active
+1,SKU-001,Wireless Mouse,electronics,peripherals,2999,true
+2,SKU-002,Mechanical Keyboard,electronics,peripherals,12990,true
+3,SKU-003,4K Monitor 27in,electronics,displays,38900,true
+4,SKU-004,USB-C Hub,electronics,accessories,4990,true
+5,SKU-005,Desk Lamp,home,lighting,5990,true
+6,SKU-006,Standing Desk Mat,home,office,8990,true
+7,SKU-007,Noise Cancel Headphones,electronics,audio,19990,true
+8,SKU-008,External SSD 1TB,electronics,storage,14990,true
+9,SKU-009,Webcam 1080p,electronics,peripherals,7990,true
+10,SKU-010,Bluetooth Speaker,electronics,audio,9990,true
+11,SKU-011,Coffee Beans 1kg,grocery,beverage,4290,true
+12,SKU-012,Tea Sampler,grocery,beverage,2990,true
+13,SKU-013,Yoga Mat,fitness,accessories,4990,true
+14,SKU-014,Resistance Bands,fitness,accessories,2490,true
+15,SKU-015,Smart Plug,home,automation,1990,true
+16,SKU-016,LED Strip 5m,home,lighting,3490,true
+17,SKU-017,Air Purifier,home,appliances,17990,true
+18,SKU-018,Electric Kettle,home,appliances,5990,false
+19,SKU-019,French Press,home,kitchen,3290,true
+20,SKU-020,Reusable Bottle,fitness,accessories,2490,true

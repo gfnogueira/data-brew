@@ -1,0 +1,16 @@
+ecommerce_analytics:
+  target: "{{ env_var('DBT_TARGET', 'dev') }}"
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('WAREHOUSE_PATH', './warehouse/poc.duckdb') }}"
+      schema: "{{ env_var('WAREHOUSE_SCHEMA', 'analytics') }}"
+      threads: 4
+      extensions:
+        - httpfs
+        - parquet
+    ci:
+      type: duckdb
+      path: ":memory:"
+      schema: analytics
+      threads: 2
