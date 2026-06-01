@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 export DBT_PROFILES_DIR := $(CURDIR)/profiles
 
-.PHONY: deps seed compile parse debug clean run-staging test-staging
+.PHONY: deps seed compile parse debug clean run-staging test-staging run-marts test-marts build
 
 deps:
 	dbt deps
@@ -26,3 +26,12 @@ run-staging:
 
 test-staging:
 	dbt test --select source:* staging
+
+run-marts:
+	dbt run --select intermediate marts
+
+test-marts:
+	dbt test --select marts
+
+build:
+	dbt build

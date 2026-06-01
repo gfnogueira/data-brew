@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: Customer dimension enriched with order history and lifecycle classification.
+    columns:
+      - name: customer_id
+        description: Surrogate identifier for the customer.
+        tests: [unique, not_null]
+      - name: email
+        tests: [unique, not_null]
+      - name: lifecycle_stage
+        description: Derived lifecycle classification based on recent and historical orders.
+        tests:
+          - accepted_values:
+              values: ['active', 'dormant', 'never_bought']
+      - name: total_orders
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+  - name: dim_products
+    description: Product dimension enriched with aggregated sales metrics.
+    columns:
+      - name: product_id
+        tests: [unique, not_null]
+      - name: sku
+        tests: [unique, not_null]
+      - name: gross_revenue_cents
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+  - name: fct_orders
+    description: Fact table for orders aggregated from line items, with status-aware revenue columns.
+    columns:
+      - name: order_id
+        tests: [unique, not_null]
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_id
+      - name: order_status
+        tests:
+          - accepted_values:
+              values: ['paid', 'refunded', 'pending', 'cancelled']
+      - name: gross_amount_cents
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
