@@ -51,6 +51,33 @@ cd analytics/dbt-analytics-engineering
 cp .env.example .env
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+make deps
 make debug
-make seed
 ```
+
+## Runtime Sequence
+
+```bash
+make pipeline       # deps + seed + run + snapshot + test + docs generate
+make validate       # Row counts, revenue reconciliation, lifecycle distribution
+make bench          # Latency benchmark across staging, marts, and full lineage
+make docs-serve     # Browse the generated dbt docs and lineage graph (port 8081)
+```
+
+## Layers
+
+| Layer | Materialization | Schema | Purpose |
+| --- | --- | --- | --- |
+| Raw seeds | table | `raw` | Source-of-record CSV extracts |
+| Staging | view | `staging` | Casts, normalizes, and standardizes raw rows |
+| Intermediate | ephemeral | `intermediate` | Joins line items with order and product context |
+| Marts | table | `marts` | Star schema with dim_customers, dim_products, fct_orders |
+| Snapshots | table | `snapshots` | SCD type 2 history for customers and products |
+
+## Test Surface
+
+- **Source tests**: unique, not_null, accepted_values, relationships on raw tables
+- **Staging tests**: referential checks plus value range tests via dbt_utils
+- **Marts tests**: uniqueness, relationships, accepted values, non-negative metrics
+- **Singular tests**: revenue consistency, orphan line items, lifecycle correctness
+- **Custom generic test**: `positive_value` reusable across numeric columns
