@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 export DBT_PROFILES_DIR := $(CURDIR)/profiles
 
-.PHONY: deps seed compile parse debug clean run-staging test-staging run-marts test-marts build snapshot test-all
+.PHONY: deps seed compile parse debug clean run-staging test-staging run-marts test-marts build snapshot test-all docs-generate docs-serve
 
 deps:
 	dbt deps
@@ -41,3 +41,9 @@ snapshot:
 
 test-all:
 	dbt test
+
+docs-generate:
+	dbt docs generate
+
+docs-serve:
+	dbt docs serve --port 8081

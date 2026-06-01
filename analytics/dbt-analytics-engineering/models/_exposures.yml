@@ -1,0 +1,47 @@
+version: 2
+
+exposures:
+  - name: revenue_overview_dashboard
+    type: dashboard
+    maturity: medium
+    url: https://bi.example.com/dashboards/revenue-overview
+    description: Executive dashboard tracking gross and net revenue, refund ratios, and channel performance.
+    owner:
+      name: Analytics Engineering
+      email: analytics@example.com
+    depends_on:
+      - ref('fct_orders')
+      - ref('dim_customers')
+
+  - name: customer_lifecycle_report
+    type: dashboard
+    maturity: high
+    url: https://bi.example.com/dashboards/customer-lifecycle
+    description: Lifecycle distribution across active, dormant, and never-bought customers driven by the lookback window.
+    owner:
+      name: CRM Analytics
+      email: crm-analytics@example.com
+    depends_on:
+      - ref('dim_customers')
+
+  - name: product_performance_export
+    type: analysis
+    maturity: medium
+    description: Hourly export of product-level revenue powering downstream merchandising decisions.
+    owner:
+      name: Merchandising
+      email: merchandising@example.com
+    depends_on:
+      - ref('dim_products')
+      - ref('fct_orders')
+
+  - name: churn_prediction_features
+    type: ml
+    maturity: low
+    description: Feature view consumed by the churn prediction training pipeline.
+    owner:
+      name: ML Platform
+      email: ml-platform@example.com
+    depends_on:
+      - ref('dim_customers')
+      - ref('fct_orders')
