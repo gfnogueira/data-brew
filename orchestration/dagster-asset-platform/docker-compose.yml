@@ -1,0 +1,23 @@
+# Local backing services for the Dagster instance.
+# The webserver and daemon run on the host via `dagster dev` so we get hot reload
+# while still routing all runs/events into Postgres for production-shaped storage.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: dagster-postgres
+    environment:
+      POSTGRES_USER: ${DAGSTER_PG_USER:-dagster}
+      POSTGRES_PASSWORD: ${DAGSTER_PG_PASSWORD:-dagster}
+      POSTGRES_DB: ${DAGSTER_PG_DB:-dagster}
+    ports:
+      - "${DAGSTER_PG_PORT:-5434}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DAGSTER_PG_USER:-dagster}"]
+      interval: 5s
+      retries: 20
+
+volumes:
+  pgdata:
