@@ -7,6 +7,13 @@ modules and re-aggregated here.
 
 from dagster import Definitions
 
-from platform.assets import raw_assets
+from platform.assets import curated_assets, raw_assets
+from platform.resources import warehouse, warehouse_io_manager
 
-defs = Definitions(assets=[*raw_assets])
+defs = Definitions(
+    assets=[*raw_assets, *curated_assets],
+    resources={
+        "warehouse": warehouse,
+        "warehouse_io_manager": warehouse_io_manager,
+    },
+)
