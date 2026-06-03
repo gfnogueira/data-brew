@@ -7,4 +7,6 @@ modules and re-aggregated here.
 
 from dagster import Definitions
 
-defs = Definitions()
+from platform.assets import raw_assets
+
+defs = Definitions(assets=[*raw_assets])
