@@ -1,0 +1,19 @@
+name: 'asset_platform'
+version: '0.1.0'
+config-version: 2
+
+profile: 'asset_platform'
+
+model-paths:   ["models"]
+seed-paths:    ["seeds"]
+
+clean-targets: ["target", "dbt_packages", "logs"]
+
+models:
+  asset_platform:
+    marts:
+      +materialized: table
+      +schema: marts
+    staging:
+      +materialized: view
+      +schema: stg

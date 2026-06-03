@@ -39,6 +39,25 @@ orchestration/dagster-asset-platform/
 ├── workspace.yaml         Dagster code-location entrypoint
 ├── config/dagster.yaml    instance configuration (Postgres storage, queue)
 ├── docker-compose.yml     local Postgres for the Dagster instance
+├── dbt_project/           embedded dbt project consumed by @dbt_assets
 └── platform/              Python package loaded by Dagster
-    └── definitions.py     Definitions() — assets, resources, jobs, schedules
+    ├── definitions.py     Definitions() — assets, resources, jobs, schedules
+    ├── resources.py       DuckDB warehouse + IO manager + DbtCliResource
+    └── assets/
+        ├── raw.py         Python sources (customers, products, orders)
+        ├── curated.py     enriched assets persisted in DuckDB via IO manager
+        └── dbt.py         dbt models exposed as Dagster assets
 ```
+
+## Bringing the dbt graph online
+
+The dbt project is parsed on the first dev session so Dagster can read its
+manifest:
+
+```bash
+(cd dbt_project && dbt deps && dbt parse)
+dagster dev -w workspace.yaml
+```
+
+After that, dbt models appear alongside the Python assets in the asset graph,
+sharing the same DuckDB warehouse as backing storage.
