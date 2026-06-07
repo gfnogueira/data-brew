@@ -4,6 +4,8 @@ import pandas as pd
 from dagster import AssetExecutionContext, AssetIn, MetadataValue, asset
 from dagster_duckdb import DuckDBResource
 
+from platform.policies import curated_freshness, downstream_eager
+
 
 @asset(
     ins={
@@ -12,6 +14,8 @@ from dagster_duckdb import DuckDBResource
     },
     io_manager_key="warehouse_io_manager",
     description="Order line items enriched with product context; persisted in DuckDB.",
+    auto_materialize_policy=downstream_eager,
+    freshness_policy=curated_freshness,
 )
 def order_lines(
     context: AssetExecutionContext,
@@ -47,6 +51,7 @@ def order_lines(
 @asset(
     deps=[order_lines],
     description="Top categories by net revenue, computed in DuckDB via the warehouse resource.",
+    auto_materialize_policy=downstream_eager,
 )
 def category_revenue(
     context: AssetExecutionContext,

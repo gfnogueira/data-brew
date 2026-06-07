@@ -5,6 +5,8 @@ from uuid import uuid4
 import pandas as pd
 from dagster import AssetExecutionContext, MetadataValue, asset
 
+from platform.policies import raw_eager
+
 # Seed kept stable so the asset graph is reproducible across runs.
 RNG = Random(2026)
 
@@ -23,7 +25,10 @@ CATEGORIES = (
 )
 
 
-@asset(description="Synthesized customer accounts used as the root of the asset graph.")
+@asset(
+    description="Synthesized customer accounts used as the root of the asset graph.",
+    auto_materialize_policy=raw_eager,
+)
 def customers(context: AssetExecutionContext) -> pd.DataFrame:
     rows = []
     base = datetime(2025, 1, 1, tzinfo=timezone.utc)
@@ -48,7 +53,10 @@ def customers(context: AssetExecutionContext) -> pd.DataFrame:
     return df
 
 
-@asset(description="Active product catalog with stable SKU mapping.")
+@asset(
+    description="Active product catalog with stable SKU mapping.",
+    auto_materialize_policy=raw_eager,
+)
 def products(context: AssetExecutionContext) -> pd.DataFrame:
     rows = []
     for i in range(1, 31):
