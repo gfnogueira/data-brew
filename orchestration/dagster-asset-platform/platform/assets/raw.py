@@ -5,6 +5,7 @@ from uuid import uuid4
 import pandas as pd
 from dagster import AssetExecutionContext, MetadataValue, asset
 
+from platform.partitions import orders_daily_partitions
 from platform.policies import raw_eager
 
 # Seed kept stable so the asset graph is reproducible across runs.
@@ -83,13 +84,15 @@ def products(context: AssetExecutionContext) -> pd.DataFrame:
 
 @asset(
     deps=["customers", "products"],
-    description="Generated orders cross-referencing customers and products.",
+    description="Daily-partitioned orders cross-referencing customers and products.",
+    partitions_def=orders_daily_partitions,
 )
 def orders(context: AssetExecutionContext) -> pd.DataFrame:
-    base = datetime(2026, 4, 1, tzinfo=timezone.utc)
+    partition_date = datetime.fromisoformat(context.partition_key).replace(tzinfo=timezone.utc)
     rows = []
-    for _ in range(220):
-        order_at = base + timedelta(minutes=RNG.randint(0, 60 * 24 * 60))
+    # Roughly 200-300 events per day, dispersed across the 24h window.
+    for _ in range(RNG.randint(200, 300)):
+        order_at = partition_date + timedelta(minutes=RNG.randint(0, 24 * 60 - 1))
         rows.append(
             {
                 "order_id": str(uuid4()),
@@ -99,13 +102,14 @@ def orders(context: AssetExecutionContext) -> pd.DataFrame:
                 "order_at": order_at,
                 "channel": RNG.choice(CHANNELS),
                 "status": RNG.choice(STATUSES),
+                "partition_date": partition_date.date(),
             }
         )
     df = pd.DataFrame(rows)
     context.add_output_metadata(
         {
+            "partition": context.partition_key,
             "row_count": len(df),
-            "channels": MetadataValue.json(df["channel"].value_counts().to_dict()),
             "refund_share": float((df["status"] == "refunded").mean()),
         }
     )

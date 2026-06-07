@@ -61,3 +61,16 @@ dagster dev -w workspace.yaml
 
 After that, dbt models appear alongside the Python assets in the asset graph,
 sharing the same DuckDB warehouse as backing storage.
+
+## Backfills
+
+`orders` and `order_lines` are partitioned daily. Replay a date range from the
+project root once the instance is up:
+
+```bash
+python backfill.py --start 2026-05-25 --end 2026-06-06
+```
+
+The script materializes each partition through the same resources Dagster uses
+in the UI, so backfills are equivalent to clicking through the Launchpad day by
+day — only scriptable.

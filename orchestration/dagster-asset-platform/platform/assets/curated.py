@@ -4,6 +4,7 @@ import pandas as pd
 from dagster import AssetExecutionContext, AssetIn, MetadataValue, asset
 from dagster_duckdb import DuckDBResource
 
+from platform.partitions import orders_daily_partitions
 from platform.policies import curated_freshness, downstream_eager
 
 
@@ -16,6 +17,7 @@ from platform.policies import curated_freshness, downstream_eager
     description="Order line items enriched with product context; persisted in DuckDB.",
     auto_materialize_policy=downstream_eager,
     freshness_policy=curated_freshness,
+    partitions_def=orders_daily_partitions,
 )
 def order_lines(
     context: AssetExecutionContext,
@@ -28,6 +30,7 @@ def order_lines(
         [
             "order_id",
             "order_at",
+            "partition_date",
             "customer_id",
             "product_id",
             "category",
@@ -41,6 +44,7 @@ def order_lines(
     ]
     context.add_output_metadata(
         {
+            "partition": context.partition_key,
             "row_count": len(enriched),
             "gross_amount": float(enriched["line_amount_cents"].sum() / 100.0),
         }

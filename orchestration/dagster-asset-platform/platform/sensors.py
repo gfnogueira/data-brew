@@ -19,11 +19,15 @@ from platform.jobs import build_marts_job
 def marts_on_new_orders(context, asset_event):
     if asset_event is None:
         return SkipReason("waiting for the first orders materialization")
+    materialization = asset_event.dagster_event.event_specific_data.materialization
+    partition = materialization.partition or "unpartitioned"
     return RunRequest(
-        run_key=str(asset_event.dagster_event.event_specific_data.materialization.tags or asset_event.timestamp),
+        run_key=f"orders/{partition}/{asset_event.timestamp}",
+        partition_key=materialization.partition,
         tags={
             "trigger": "asset_sensor",
             "source_asset": "orders",
+            "source_partition": partition,
         },
     )
 
