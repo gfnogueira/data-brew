@@ -1,7 +1,6 @@
 # TimescaleDB Telemetry
 
-Local Proof of Concept for high-volume telemetry storage and analytics on
-TimescaleDB running over PostgreSQL.
+High-volume telemetry storage and analytics on TimescaleDB running over PostgreSQL.
 
 ## Objective
 
