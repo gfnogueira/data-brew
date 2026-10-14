@@ -1,0 +1,8 @@
+customer_id,name,segment,signup_date
+c-001,Acme Corp,enterprise,2024-01-15
+c-002,Globex Industries,enterprise,2024-02-04
+c-003,Initech,smb,2024-03-22
+c-004,Umbrella Trading,smb,2024-05-11
+c-005,Soylent Logistics,mid_market,2024-06-01
+c-006,Hooli Capital,enterprise,2024-07-18
+c-007,Vehement Partners,smb,2024-09-02
