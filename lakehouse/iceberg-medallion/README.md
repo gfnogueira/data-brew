@@ -10,6 +10,23 @@ tables, DuckDB reads them and lands the gold aggregates. No Spark.
     silver    typed, deduped, joined, ready for query
     gold      daily revenue and customer cohort rollups
 
+## End to end
+
+    seeds/*.csv
+         |
+         v
+    pipeline.bronze   -->   bronze.customers, bronze.orders   (append)
+         |
+         v
+    pipeline.silver   -->   silver.customers, silver.orders   (replace)
+         |
+         v
+    pipeline.gold     -->   gold.daily_revenue, gold.customer_cohort
+
+Each arrow is a PyIceberg write against the Nessie catalog. Silver and gold
+replace the table on each run so the shape stays canonical; bronze appends
+so a reader can trust the raw history.
+
 ## The bronze step
 
 Where: pipeline/bronze.py
